@@ -59,9 +59,6 @@
                                     <label>password</label>
                                     <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="password" type="password" name="psw">
                                 </p>
-
-
-
                             </form>
                             <button id="login" class="signup">login </button>
                             <a href="./DangKy.html" class="login">sign up</a>
@@ -111,7 +108,7 @@
                     success: function(data) {
                         var token = data.token;
                         localStorage.setItem("token", token);
-                        alert("đăng nhập thành công.");
+
                         var role = parseJwt(token);
                         if (role.authorities[0].authority == "ROLE_ADMIN") {
                             window.location = "./FrontendAdmin/DanhSachPhong.html";

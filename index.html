@@ -454,8 +454,8 @@
             method: 'GET',
             contentType: 'json',
             dataType: 'json',
-            error: function(res) {
-
+            error: function(err) {
+                console.log(err);
             },
             success: function(res) {
                 $("#listPhanHoi").empty();
