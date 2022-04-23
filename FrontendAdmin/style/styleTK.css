@@ -1,0 +1,93 @@
+
+.content{
+    background-color: white;
+}
+.content-wrapper{
+    margin-left: 20px;
+}
+.tittel{
+    margin-left: 20px;
+}
+.container{
+    margin-left: 7%;
+}
+.tittelKH{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.cmbNam{
+    padding: 5px 30px;
+    margin-left: 10px;
+    border: 1px solid rgb(190, 190, 189);
+    border-radius: 5px;
+}
+.tittel{
+    margin-bottom: 20px;
+}
+.inpSearch{
+    float: right;
+}
+.inpSearch input{
+    border: 1px solid rgb(223, 223, 219);
+    border-radius: 5px;
+    height: 35px;
+    /* width: 300px; */
+    padding: 5px;
+}
+.container2{
+    width: 96%;
+    margin-left: 20px;
+}
+.main-footer{
+    text-align: center;
+    background-color: rgb(235, 243, 243);
+}
+.content-table {
+    width: 96%;
+    border-collapse: collapse;
+    margin: 25px 20px;
+    text-align: center;
+    font-size: 0.9em;
+    /* min-width: 400px; */
+    /* border-radius: 5px 5px 0 0; */
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr {
+    background-color:  rgb(33, 150, 101);
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid rgb(33, 150, 101);
+}
+
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: rgb(33, 150, 101);
+}
+.chart {
+    width : 480px ; 
+    height: 400px ;
+    border: 1px solid #c3c3c3 ;
+}
+.Pagination{
+    margin-right: 20px;
+}

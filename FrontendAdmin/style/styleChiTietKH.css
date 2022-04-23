@@ -1,0 +1,32 @@
+.Contact{
+  margin-left: 30px;
+}
+.content{
+  background-color: white;
+}
+
+.btnPro{
+  text-align: center;
+  background-color: white;
+  color: blue;
+  border: 1px solid blue;
+  float: right;
+  /* margin-right: 10px; */
+  width: 80px;
+  border-radius: 5px;
+  padding: 5px 5px;
+  margin-left: 10px;
+}
+  
+.btnPro:hover{
+    color: white;
+    background-color: blue;
+    cursor: pointer;
+}
+.back{
+  margin: 20px 30px 0px 20px;
+}
+.main-footer{
+    text-align: center;
+    background-color: rgb(235, 243, 243);
+}

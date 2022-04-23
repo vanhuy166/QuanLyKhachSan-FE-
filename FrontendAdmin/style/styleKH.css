@@ -1,0 +1,56 @@
+.main-footer{
+    text-align: center;
+}
+.header{
+    background-color: rgb(33, 150, 101);
+    color: white;
+}
+.content{
+    background-color: white;
+}
+
+.tittelKH{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.tittel{
+    margin-bottom: 20px;
+}
+.inpSearch{
+    float: right;
+}
+.inpSearch input{
+    border: 1px solid rgb(223, 223, 219);
+    border-radius: 5px;
+    height: 35px;
+    width: 300px;
+    padding: 5px;
+}
+.Table_wrapper {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    height: 400px;
+    overflow-y: scroll;
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  /* ẩn thanh scroll */
+  .Table_wrapper::-webkit-scrollbar { 
+    width: 0 !important;
+    display: none; 
+  }
+.imgProduct{
+    width: 80px;
+    height: 90px;
+}
+.ChiTietHD{
+    border-bottom: 1px solid blue;
+}
+.main-footer{
+    text-align: center;
+    background-color: rgb(235, 243, 243);
+}
+.Pagination{
+    margin-top: 20px;
+}

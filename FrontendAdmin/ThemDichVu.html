@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>fahasa.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+    <link rel="stylesheet" href="style/styleIndex.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+
+            <!-- SEARCH FORM 
+            <form class="form-inline ml-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+                    </div>
+                </div>
+            </form>-->
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-comments"></i>
+                        <span class="badge badge-danger navbar-badge">3</span>
+                    </a>
+                </li>
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../DangNhap.html"> Đăng xuất <i class="nav-icon fas fa-sign-out-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-info elevation-4">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link">
+                <img src="./img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">FAHASA.COM</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="./img/user.jpg" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Xin chào, Admin!</a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item has-treeview menu-open">
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="./DanhSachPhong.html" class="nav-link">
+                                        <i class="nav-icon fas fa-th"></i>
+                                        <p>Danh sách phòng</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="./DanhSachDichVu.html" class="nav-link active">
+                                        <i class="far fa-square nav-icon"></i>
+                                        <p>Danh sách dịch vụ</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="./KhachHang.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Khách hàng</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="./DonHang.html" class="nav-link">
+                                        <i class="nav-icon far fa-plus-square"></i>
+                                        <p>Danh sách hóa đơn</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="./ThongKe.html" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>Thống kê</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Content Header -->
+        <div class="content-wrapper content">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row contentHeader" id="chiTietDichVu">
+                        <div class="col-sm-6" style="text-align:center;">
+                            <img id="imgDichVu" style="width:300px; height:300px;" src="../images/coca.png" alt="">
+                        </div>
+                        <div class="col-sm-6 MainSP">
+                            <h4>Thêm dịch vụ</h4>
+                            <div class="row contentMain">
+                                <table style="width:60%;  text-align:left; padding:0 auto;">
+                                    <tr>
+                                        <th>Tên dịch vụ:</th>
+                                        <td><input type="text" id="txtTenPhong" value="" required /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Loại dịch vụ:</th>
+                                        <td>
+                                            <select id="sel">
+                                                <option value="">Loại dịch vụ</option>
+                                                <option value="Giải trí">Giải trí</option>
+                                                <option value="Thể thao">Thể thao</option>
+                                                <option value="Sức khỏe">Sức khỏe</option>
+                                                <option value="Vệ sinh">Vệ sinh</option>
+                                                <option value="Vận tải">Vận tải</option>
+                                                <option value="Giáo dục">Giáo dục</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Giá dịch vụ:</th>
+                                        <td><input type="text" id="txtGiaDichVu" value="" required /> VNĐ</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Ảnh dịch vụ:</th>
+                                        <td><input type="file" id="file-upload" value="C:\\fakepath\\coca.png" /></td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <div class="row btnSP" style="justify-content: left; margin: 30px 0;">
+                                <button class="btnPro" onClick="ThemDichVu();">Thêm</button>
+                                <a href="./DanhSachDichVu.html" class="btnPro">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.content-header -->
+
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2020-2022 <a href="http://adminlte.io">fahasa.com</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <script src="./plugins/jquery/jquery.min.js"></script>
+    <script src="./dist/js/bootstrap.js"></script>
+    <script>
+        var img = "coca.png";
+
+        document.getElementById('file-upload').onchange = function() {
+            var imageDemo = document.getElementById("imgDichVu");
+            var arr = this.value.split("\\");
+            imageDemo.src = "../images/" + arr[arr.length - 1];
+            img = arr[arr.length - 1];
+        };
+
+        function ThemDichVu() {
+            if ($('#txtTenPhong').val() != "" && $('#sel :selected').val() != "" && $('#txtGiaDichVu').val() != "") {
+                var data = {
+                    "name": $('#txtTenPhong').val(),
+                    "image": img,
+                    "type": $('#sel :selected').val(),
+                    "price": $('#txtGiaDichVu').val()
+                }
+                var headers = "Bearer " + localStorage.getItem("token");
+                $.ajax({
+                    url: '',
+                    headers: {
+                        "Authorization": headers
+                    },
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify(data),
+                    error: function(err) {
+                        alert("Thêm dịch không thành công!!!");
+                        console.log('Error!', err)
+                    },
+                    success: function(data) {
+                        alert("Thêm thành công!!!");
+                        window.location = "./DanhSachDichVu.html";
+                    }
+                });
+            } else {
+                alert("Hãy nhập đủ thông tin phòng!");
+            }
+        }
+    </script>
+</body>
+
+</html>

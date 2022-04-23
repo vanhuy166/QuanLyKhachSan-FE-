@@ -1,0 +1,126 @@
+.content{
+  background-color: white;
+}
+.header{
+  background-color: rgb(33, 150, 101);
+  color: white;
+}
+.btnAdd{
+    background-color: white;
+    color: rgb(33, 150, 101);
+    border: 2px solid rgb(33, 150, 101);
+    float: right;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+.btnAdd:hover{
+    color: white;
+    background-color: rgb(33, 150, 101);
+    cursor: pointer;
+}
+.tittelSP{
+    margin-left: 30px;
+    margin-right: 20px;
+}
+.search{
+    margin-top: 20px;
+    margin-left: 5%;
+    display: flex;
+    width: 100%;
+}
+.cmbSearch{
+    text-align: center;
+    width: 20%;
+    height: 35px;
+    border: 1px solid rgb(223, 223, 219);
+    border-radius: 5px;
+    margin-right: 2%;
+    margin-top: 20px;
+}
+.inpSearch{
+    margin-top: 20px;
+    text-align: center;
+}
+.inpSearch input{
+    border: 1px solid rgb(223, 223, 219);
+    border-radius: 5px;
+    height: 35px;
+    padding: 5px;
+}
+.Table_wrapper {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  height: 400px;
+  overflow-y: scroll;
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* ẩn thanh scroll */
+.Table_wrapper::-webkit-scrollbar { 
+  width: 0 !important;
+  display: none; 
+}
+.imgProduct{
+  width: 70px;
+  height: 80px;
+}
+.add a{
+  color: black;
+}
+.add a:hover{
+  color: blue;
+  cursor: pointer;
+}
+.edit a{
+  color: black;
+}
+.edit a:hover{
+  color: rgb(187, 74, 21);
+  cursor: pointer;
+}
+.delete:hover{
+  color: red;
+  cursor: pointer;
+}
+.pagination{
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.main-footer{
+    text-align: center;
+    background-color: rgb(235, 243, 243);
+}
+
+/* AddProduct */
+.formAdd{
+  margin: 20px 30px;
+}
+.img{
+  margin-top: 10px;
+}
+.tittelImg{
+  margin-right: 10px;
+}
+.btnPro{
+  text-align: center;
+  background-color: white;
+  color: blue;
+  border: 1px solid blue;
+  float: right;
+  /* margin-right: 10px; */
+  width: 80px;
+  border-radius: 5px;
+  padding: 5px 5px;
+  margin-left: 10px;
+}
+
+.btnPro:hover{
+  color: white;
+  background-color: blue;
+  cursor: pointer;
+}
+.Pagination{
+  margin-top: 20px;
+}
