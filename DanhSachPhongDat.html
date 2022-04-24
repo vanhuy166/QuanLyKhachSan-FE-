@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="./fonts/flaticon/font/flaticon.css">
     <link rel="stylesheet" href="./css/aos.css">
     <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        #listRoom::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -59,6 +65,35 @@
 
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <!-- Form đổi phòng -->
+        <div id="changeRoom" style=" display: none; position: fixed; top: 0;  left: 0;  right: 0;  bottom: 0;  background-color: rgba(0,0,0,0.3);   z-index: 100;">
+            <div style="margin: 60px auto;   width: 80%;    height: 85%; border-radius:10px;  background-color: white;">
+                <div class="site-section bg-light" style="height:100%; padding:3em 0; position: relative">
+                    <p onclick="hideChangeRoom();" style="cursor: pointer; position:fixed; top:60px; right:11%; font-weight:600; display:block; font-size:1.4rem;">X</p>
+                    <div class="py-1">
+                        <div class="row">
+                            <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                                <h2 class="mb-5">Đổi phòng</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Danh sách phòng -->
+                            <div class="col-12 list-room">
+                                <div class="container">
+                                    <div class="row" id="listRoom" style="height: 466px; overflow-y: scroll;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
 
@@ -168,7 +203,7 @@
         </div>
 
 
-        <div class="container">
+        <div class="container" style="max-width: 1400px;">
             <div class="row">
                 <div class="col-md-6 mx-auto text-center mb-5 section-heading">
                     <h2>Danh sách đặt</h2>
@@ -275,6 +310,7 @@
     <script>
         var headers = "Bearer " + localStorage.getItem("token");
         var roomCharge = 0;
+        var originalRoomId, receiptId;
 
         /* load danh sách phòng đặt */
         $.ajax({
@@ -295,6 +331,8 @@
                     if (data[i].paymentState == "UNPAID") {
                         var listBookRoom = data[i].bookingDetails;
                         var lenBook = listBookRoom.length;
+                        var receiptId = data[i].receiptId;
+
                         for (var j = 0; j < lenBook; ++j) {
                             const startDate = listBookRoom[j].startDate;
                             const endDate = listBookRoom[j].endDate;
@@ -302,6 +340,8 @@
                             const t1 = new Date(startDate);
                             const t2 = new Date(endDate);
                             const datediff = parseInt(Math.abs(t2.getTime() - t1.getTime()) / (24 * 60 * 60 * 1000) + 1);
+
+
 
                             $.ajax({
                                 url: 'http://localhost:8083/api/v1/rooms/' + listBookRoom[j].roomId,
@@ -324,7 +364,10 @@
                                     <td>` + endDate + `</td>
                                     <td>` + datediff + `</td>
                                     <td>` + (datediff * parseFloat(data.roomType.price)).toString() + ` VNĐ</td>
-                                    <td><button type="button" class="btn btn-outline-danger" onclick="huybtn('')">Hủy</button></td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-danger" onclick="huybtn('')">Hủy</button>
+                                        <button type="button" class="btn btn-outline-danger" onclick="doibtn('` + data.roomId + `','` + receiptId + `')">Đổi</button>
+                                    </td>
                                 </tr>
                                    `;
                                     document.getElementById('allHistory').innerHTML = table;
@@ -349,6 +392,108 @@
             fail: function(response) {}
 
         });
+
+        function doibtn(idRoom, receiptID) {
+            $("#changeRoom").css("display", "block");
+            originalRoomId = idRoom;
+            receiptId = receiptID;
+
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/rooms',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    $("#listRoom").empty();
+                    const len = data.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        if (data[i].roomId != originalRoomId) {
+                            table += `
+                        <div class="col-md-6 col-lg-4 mb-5">
+                            <div class="hotel-room text-center">
+                                <a class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
+                                <div class="hotel-room-body">
+                                    <h3 class="heading mb-0"><a>` + data[i].name + `</a></h3>
+                                    <strong class="price">` + data[i].roomType.price + ` VNĐ</strong>
+                                    <br>
+                                    <p><a class="btn btn-primary pill text-white px-4" onclick="DoiPhong('` + data[i].roomId + `')">Đổi</a></p>
+                                </div>
+                            </div>
+                        </div>
+                           `;
+                        }
+                    }
+                    document.getElementById('listRoom').innerHTML = table;
+                },
+                fail: function(response) {}
+            });
+        }
+
+        function DoiPhong(idPhong) {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+            var yyyy = today.getFullYear();
+            var hours = today.getHours();
+            var minutes = today.getMinutes();
+            var seconds = today.getSeconds();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            if (hours < 10) {
+                hours = '0' + hours
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+            if (seconds < 10) {
+                seconds = '0' + seconds
+            }
+
+            today = yyyy + '-' + mm + '-' + dd + ' ' + hours + ':' + minutes + ':' + seconds;
+
+
+            var data = {
+                "userId": localStorage.getItem("userID"),
+                "receiptId": receiptId,
+                "originalRoomId": originalRoomId,
+                "targetRoomId": idPhong,
+                "swapDate": today
+            }
+
+            var headers = "Bearer " + localStorage.getItem("token");
+
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/room-swaps/begin-swap',
+                headers: {
+                    "Authorization": headers
+                },
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    alert("Đổi thành công");
+                    window.location = "./DanhSachPhongDat.html";
+                },
+                fail: function(response) {}
+            });
+
+        }
+
+        function hideChangeRoom() {
+            $("#changeRoom").css("display", "none");
+        }
 
         function huybtn() {
             alert("hủy")

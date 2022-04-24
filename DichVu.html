@@ -384,39 +384,7 @@
             var data = {
                 "type": myRadio.value
             }
-            $.ajax({
-                url: 'http://localhost:8083/api/v1/hotel-services/filter',
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify(data),
-                error: function(res) {
-                    console.log(res);
-                },
-                success: function(res) {
-                    $("#listDichVu").empty();
-                    const len = res.length;
-                    let table = '';
-                    for (var i = 0; i < len; ++i) {
-                        table += `
-                            <div class="col-md-6 col-lg-4 mb-5">
-                                <div class="hotel-room text-center"  onclick="clickDv('` + res[i].id + `')">
-                                    <a href="./ChiTietDichVu.html" class="d-block mb-0 thumbnail"><img src="./images/` + res[i].image + `" alt="Image" class="img-fluid img-service"></a>
-                                    <div class="hotel-room-body">
-                                        <h3 class="heading mb-0"><a href="#">` + res[i].name + `</a></h3>
-                                        <strong class="price">` + res[i].price + ` VNĐ</strong>
-                                        <p>` + res[i].type + `</p>
-                                        <br>
-                                        <p><a   href= "./ChiTietDichVu.html" class="btn btn-primary pill text-white px-4">Buy Now</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                            `;
-                    }
-                    document.getElementById('listDichVu').innerHTML = table;
-                },
-                fail: function(response) {}
-            });
+            filter(data);
         }
 
         /* lọc theo giá dịch vụ */
@@ -446,12 +414,17 @@
                 "priceFrom": fromGia,
                 "priceTo": toGia
             }
+            filter(data);
+        }
+
+        /*lọc*/
+        function filter(val) {
             $.ajax({
                 url: 'http://localhost:8083/api/v1/hotel-services/filter',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                data: JSON.stringify(data),
+                data: JSON.stringify(val),
                 error: function(res) {
                     console.log(res);
                 },
@@ -461,19 +434,19 @@
                     let table = '';
                     for (var i = 0; i < len; ++i) {
                         table += `
-                        <div class="col-md-6 col-lg-4 mb-5">
-                            <div class="hotel-room text-center"  onclick="clickDv('` + res[i].id + `')">
-                                <a href="./ChiTietDichVu.html" class="d-block mb-0 thumbnail"><img src="./images/` + res[i].image + `" alt="Image" class="img-fluid img-service"></a>
-                                <div class="hotel-room-body">
-                                    <h3 class="heading mb-0"><a href="#">` + res[i].name + `</a></h3>
-                                    <strong class="price">` + res[i].price + ` VNĐ</strong>
-                                    <p>` + res[i].type + `</p>
-                                    <br>
-                                    <p><a   href= "./ChiTietDichVu.html" class="btn btn-primary pill text-white px-4">Buy Now</a></p>
+                            <div class="col-md-6 col-lg-4 mb-5">
+                                <div class="hotel-room text-center"  onclick="clickDv('` + res[i].id + `')">
+                                    <a href="./ChiTietDichVu.html" class="d-block mb-0 thumbnail"><img src="./images/` + res[i].image + `" alt="Image" class="img-fluid img-service"></a>
+                                    <div class="hotel-room-body">
+                                        <h3 class="heading mb-0"><a href="#">` + res[i].name + `</a></h3>
+                                        <strong class="price">` + res[i].price + ` VNĐ</strong>
+                                        <p>` + res[i].type + `</p>
+                                        <br>
+                                        <p><a href= "./ChiTietDichVu.html" class="btn btn-primary pill text-white px-4">Buy Now</a></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        `;
+                            `;
                     }
                     document.getElementById('listDichVu').innerHTML = table;
                 },

@@ -255,8 +255,9 @@
                                     <td> <input type="datetime-local" id="toDate" onchange="toDateChange()" name="toDate"></td>
                                 </div>
                                 <div>
-                                    <td> <button style="min-width:120px;" class="btn btn-primary pill text-white px-4 btn-DatPhong" id="btn-CheckPhong" onclick="locPhong();">Lọc</button></td>
+                                    <td> <button style="min-width:120px;" class="btn btn-primary pill text-white px-4 btn-DatPhong" id="btn-CheckPhong" onclick="locPhong();">Tìm</button></td>
                                 </div>
+
                             </div>
 
                             <div class="row" id="listRoom">
@@ -510,37 +511,7 @@
             var data = {
                 "type": myRadio.value
             }
-            console.log(data)
-            $.ajax({
-                url: 'http://localhost:8083/api/v1/rooms/filter',
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify(data),
-                error: function(err) {
-                    console.log(err);
-                },
-                success: function(data) {
-                    $("#listRoom").empty();
-                    const len = data.length;
-                    let table = '';
-                    for (var i = 0; i < len; ++i) {
-                        table += `
-                           <div class="col-md-6 col-lg-4 mb-5">
-                               <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
-                                   <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
-                                   <div class="hotel-room-body">
-                                       <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
-                                       <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
-                                   </div>
-                               </div>
-                           </div>
-                           `;
-                    }
-                    document.getElementById('listRoom').innerHTML = table;
-                },
-                fail: function(response) {}
-            });
+            filterRoom(data);
         }
 
         /* lọc theo giá phòng */
@@ -562,43 +533,12 @@
                     break;
             }
 
-
-
             var data = {
                 "priceFrom": fromGia,
                 "priceTo": toGia
             }
 
-            $.ajax({
-                url: 'http://localhost:8083/api/v1/rooms/filter',
-                method: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify(data),
-                error: function(err) {
-                    console.log(err);
-                },
-                success: function(data) {
-                    $("#listRoom").empty();
-                    const len = data.length;
-                    let table = '';
-                    for (var i = 0; i < len; ++i) {
-                        table += `
-                           <div class="col-md-6 col-lg-4 mb-5">
-                               <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
-                                   <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
-                                   <div class="hotel-room-body">
-                                       <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
-                                       <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
-                                   </div>
-                               </div>
-                           </div>
-                           `;
-                    }
-                    document.getElementById('listRoom').innerHTML = table;
-                },
-                fail: function(response) {}
-            });
+            filterRoom(data);
         }
 
         /* lọc theo số người */
@@ -624,32 +564,36 @@
                 "seatCountFrom": seatCountFrom,
                 "seatCountTo": seatCountTo
             }
+            filterRoom(data);
+        }
+
+        /*Lọc phòng */
+        function filterRoom(val) {
             $.ajax({
                 url: 'http://localhost:8083/api/v1/rooms/filter',
                 method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                data: JSON.stringify(data),
+                data: JSON.stringify(val),
                 error: function(err) {
                     console.log(err);
                 },
                 success: function(data) {
                     $("#listRoom").empty();
                     const len = data.length;
-                    console.log(data);
                     let table = '';
                     for (var i = 0; i < len; ++i) {
                         table += `
-                           <div class="col-md-6 col-lg-4 mb-5">
-                               <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
-                                   <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
-                                   <div class="hotel-room-body">
-                                       <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
-                                       <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
-                                   </div>
-                               </div>
-                           </div>
-                           `;
+                        <div class="col-md-6 col-lg-4 mb-5">
+                            <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
+                                <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
+                                <div class="hotel-room-body">
+                                    <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
+                                    <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
+                                </div>
+                            </div>
+                        </div>
+                       `;
                     }
                     document.getElementById('listRoom').innerHTML = table;
                 },

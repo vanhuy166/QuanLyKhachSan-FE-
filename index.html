@@ -426,6 +426,24 @@
                 });
             }
         });
+
+
+        var headers = "Bearer " + localStorage.getItem("token");
+        $.ajax({
+            url: 'http://localhost:8083/api/v1/users/info',
+            headers: {
+                "Authorization": headers
+            },
+            method: 'GET',
+            contentType: 'application/json',
+            error: function(err) {
+                console.log(err);
+            },
+            success: function(data) {
+                localStorage.setItem("userID", data.id);
+            },
+            fail: function(response) {}
+        });
     </script>
 
     <!-- Đổi mật khẩu -->
@@ -574,7 +592,7 @@
         var map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [105.85, 21.0], //Tọa độ lãnh thổ Việt Nam
+            center: [105.85, 21.0],
             zoom: 15
         });
 
@@ -597,29 +615,28 @@
         });
         map.addControl(directions, 'top-left');
 
-        map.on('load', function() {
+        //thêm marker vào bản đồ
+        var marker = new mapboxgl.Marker({
+                color: "red",
+                draggable: true,
+                anchor: 'bottom',
+            }).setLngLat(coordinatesHotel)
+            .addTo(map);
 
+        //thêm popup vào bản đồ
+        var popup = new mapboxgl.Popup({
+                closeButton: true,
+                closeOnClick: false,
+                anchor: 'top-right',
+            }).setLngLat(coordinatesHotel)
+            .setHTML("<h1>Cầu Giấy hotel</h1>")
+            .addTo(map);
+
+        map.on('load', function() {
             map.flyTo({
                 center: coordinatesHotel,
-                essential: true // this animation is considered essential with respect to prefers-reduced-motion
+                essential: true
             });
-
-            //thêm marker vào bản đồ
-            var marker = new mapboxgl.Marker({
-                    color: "red", //Màu của Marker là đỏ
-                    draggable: true,
-                    anchor: 'bottom', //Nhãn Hà Nội nằm dưới Marker 
-                }).setLngLat(coordinatesHotel) //Thiết lập Marker tại hà Nội
-                .addTo(map);
-
-            //thêm popup vào bản đồ
-            var popup = new mapboxgl.Popup({
-                    closeButton: true,
-                    closeOnClick: false,
-                    anchor: 'top-right',
-                }).setLngLat(coordinatesHotel)
-                .setHTML("<h1>Cầu Giấy hotel</h1>")
-                .addTo(map);
         });
 
         //thêm navigationControl chứ các nút thu/phóng  và la bàn vào bản đồ
@@ -668,6 +685,7 @@
                 .addTo(map);
         });
 
+        /*Chỉ đường từ vị trí của tôi*/
         function ChiDuong() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -684,8 +702,11 @@
                 essential: true // this animation is considered essential with respect to prefers-reduced-motion
 
             });
+
+            marker.setLngLat(coordinatesHotel);
         }
 
+        /*Đổi  ngôn ngữ*/
         function changeLanguages() {
             var language = document.getElementById("selLanguages").value;
             map.setLayoutProperty('country-label', 'text-field', [
@@ -694,12 +715,13 @@
             ]);
         }
 
+
+        /*đến vị trí khách sạn*/
         function Hotel() {
             map.flyTo({
                 center: coordinatesHotel,
                 zoom: 15,
-                essential: true // this animation is considered essential with respect to prefers-reduced-motion
-
+                essential: true
             });
         }
     </script>

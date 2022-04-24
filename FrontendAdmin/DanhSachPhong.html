@@ -141,18 +141,18 @@
                         </div>
                     </div>
                     <div class="row search">
-                        <select name="cars" id="cars" class="cmbSearch">
+                        <select name="cars" id="selLoaiPhong" onchange="changeSelectLoai();" class="cmbSearch">
                             <option value="">Loại phòng</option>
-                            <option value="VIP">VIP</option>
+                            <option value="VIP" selected="selected">VIP</option>
                             <option value="Thường">Thường</option>
                         </select>
-                        <select name="cars" id="cars" class="cmbSearch">
+                        <select name="cars" id="selGiaPhong" onchange="changeSelectGia();" class="cmbSearch">
                             <option value="">Giá phòng</option>
                             <option value="1">Dưới 500.000 VNĐ</option>
                             <option value="2">Từ 500.000 - 1.000.000 VNĐ</option>
                             <option value="3">Trên 1.000.000 VNĐ</option>
                         </select>
-                        <select name="cars" id="cars" class="cmbSearch">
+                        <select name="cars" id="selSoNguoi" onchange="changeSelectSoNg();" class="cmbSearch">
                             <option value="">Số người</option>
                             <option value="1">Dưới 2 người</option>
                             <option value="2">Từ 2 - 4 người</option>
@@ -164,6 +164,11 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
+
+                        <div style="padding: 18px 97px 0 0; flex: 1;">
+                            <a style="color: white; background-color: rgb(33,150,101);" onClick="loadListRoom();" class="btnAdd">Danh sách phòng</a>
+                        </div>
+
                     </div>
 
                     <div class="Table_wrapper" style="height: 472px;">
@@ -207,20 +212,23 @@
     <script src="plugins/jquery/jquery.min.js"></script>
     <script src="dist/js/bootstrap.js"></script>
     <script>
-        $.ajax({
-            url: 'http://localhost:8083/api/v1/rooms',
-            method: 'GET',
-            contentType: 'json',
-            dataType: 'json',
-            error: function(err) {
-                console.log(err);
-            },
-            success: function(data) {
-                $("#listRoom").empty();
-                const len = data.length;
-                let table = '';
-                for (var i = 0; i < len; ++i) {
-                    table += `
+        loadListRoom();
+        /*Load danh sách phòng*/
+        function loadListRoom() {
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/rooms',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    $("#listRoom").empty();
+                    const len = data.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table += `
                        <tr style="line-height:80px;">
                             <th scope="row">` + data[i].roomId + `</th>
                             <td>
@@ -240,16 +248,22 @@
                             </td>
                         </tr>
                        `;
-                }
-                document.getElementById('listRoom').innerHTML = table;
-            },
-            fail: function(response) {}
-        });
+                    }
+                    document.getElementById('listRoom').innerHTML = table;
+                },
+                fail: function(response) {}
+            });
+
+            document.getElementById('selLoaiPhong').children[0].selected = true;
+            document.getElementById('selGiaPhong').children[0].selected = true;
+            document.getElementById('selSoNguoi').children[0].selected = true;
+        }
 
         function clickRoom(idRoom) {
             sessionStorage.setItem('key', idRoom);
         }
 
+        /* xóa phòng */
         function deleteFunc(idRoom) {
             let text = "Bạn có muốn xóa phòng này không?";
             if (confirm(text) == true) {
@@ -275,6 +289,118 @@
             } else {
                 return false
             }
+        }
+
+        /* lọc theo loại */
+        function changeSelectLoai() {
+            if ($("#selLoaiPhong :selected").val() == "") {
+                return;
+            }
+            var data = {
+                "type": $("#selLoaiPhong :selected").val()
+            }
+            filterRoom(data);
+        }
+
+        /* lọc theo giá */
+        function changeSelectGia() {
+            var fromGia = 0,
+                toGia = 0;
+            switch ($("#selGiaPhong :selected").val()) {
+                case "":
+                    return;
+                case "1":
+                    fromGia = 0;
+                    toGia = 499999;
+                    break;
+                case "2":
+                    fromGia = 500000;
+                    toGia = 1000000;
+                    break;
+                case "3":
+                    fromGia = 1000001;
+                    toGia = 1000000000;
+                    break;
+            }
+
+            var data = {
+                "priceFrom": fromGia,
+                "priceTo": toGia
+            }
+
+            filterRoom(data);
+        }
+
+        /*Lọc theo số người*/
+        function changeSelectSoNg() {
+            var seatCountFrom = 0,
+                seatCountTo = 0;
+            switch ($("#selSoNguoi :selected").val()) {
+                case "":
+                    return;
+                case "1":
+                    seatCountFrom = 0;
+                    seatCountTo = 2;
+                    break;
+                case "2":
+                    seatCountFrom = 3;
+                    seatCountTo = 4;
+                    break;
+                case "3":
+                    seatCountFrom = 4;
+                    seatCountTo = 10;
+                    break;
+            }
+
+            var data = {
+                "seatCountFrom": seatCountFrom,
+                "seatCountTo": seatCountTo
+            }
+
+            filterRoom(data);
+        }
+
+        /*Lọc phòng */
+        function filterRoom(val) {
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/rooms/filter',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(val),
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    $("#listRoom").empty();
+                    const len = data.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table += `
+                       <tr style="line-height:80px;">
+                            <th scope="row">` + data[i].roomId + `</th>
+                            <td>
+                                <img src="../images/` + data[i].image + `" class="imgProduct" alt="User Image">
+                            </td>
+                            <td>` + data[i].name + `</td>
+                            <td>` + data[i].roomType.name + `</td>
+                            <td>` + data[i].roomType.price + ` VNĐ</td>
+                            <td>` + data[i].roomType.capacity + `</td>
+                            <td class="row" style="justify-content: center;">
+                                <div class="col-sm-4 edit" onclick = "clickRoom('` + data[i].roomId + `');">
+                                    <a href="./SuaPhong.html"><i class="fas fa-edit"></i></a>
+                                </div>
+                                <div class="col-sm-4 delete">
+                                    <i onclick="deleteFunc('` + data[i].roomId + `')" class="fas fa-trash-alt"></i>
+                                </div>
+                            </td>
+                        </tr>
+                       `;
+                    }
+                    document.getElementById('listRoom').innerHTML = table;
+                },
+                fail: function(response) {}
+            });
         }
     </script>
 

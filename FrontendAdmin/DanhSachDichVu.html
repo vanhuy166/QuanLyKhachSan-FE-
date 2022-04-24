@@ -141,7 +141,7 @@
                         </div>
                     </div>
                     <div class="row search">
-                        <select name="cars" id="cars" class="cmbSearch">
+                        <select name="cars" id="selLoaiDV" onchange="changeLoai();" class="cmbSearch">
                             <option value="">Loại dịch vụ</option>
                             <option value="Giải trí">Giải trí</option>
                             <option value="Thể thao">Thể thao</option>
@@ -150,7 +150,7 @@
                             <option value="Vận tải">Vận tải</option>
                             <option value="Giáo dục">Giáo dục</option>
                         </select>
-                        <select name="cars" id="cars" class="cmbSearch">
+                        <select name="cars" id="selGiaDV" onchange="changeGia();" class="cmbSearch">
                             <option value="">Giá dịch vụ</option>
                             <option value="1">Dưới 50.000 VNĐ</option>
                             <option value="2">Từ 50.000 - 150.000 VNĐ</option>
@@ -163,6 +163,10 @@
                             <button class="btn btn-navbar" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
+                        </div>
+
+                        <div style="padding: 18px 97px 0 0; flex: 1;">
+                            <a style="color: white; background-color: rgb(33,150,101);" onClick="loadListDV();" class="btnAdd">Danh sách dịch vụ</a>
                         </div>
                     </div>
 
@@ -205,49 +209,58 @@
     <script src="plugins/jquery/jquery.min.js"></script>
     <script src="dist/js/bootstrap.js"></script>
     <script>
-        $.ajax({
-            url: 'http://localhost:8083/api/v1/hotel-services',
-            method: 'GET',
-            contentType: 'json',
-            dataType: 'json',
-            error: function(err) {
-                console.log(err);
-            },
-            success: function(res) {
-                $("#listDichVu").empty();
-                const len = res.length;
-                let table = '';
-                for (var i = 0; i < len; ++i) {
-                    table += `
-                        <tr style="line-height:80px;">
-                            <th scope="row">` + res[i].id + `</th>
-                            <td>
-                                <img src="../images/` + res[i].image + `" class="imgProduct" alt="User Image">
-                            </td>
-                            <td>` + res[i].name + `</td>
-                            <td>` + res[i].type + `</td>
-                            <td>` + res[i].price + ` VNĐ</td>
-                            <td class="row">
-                                <div class="col-sm-4 edit" onclick = "clickDichVu('` + res[i].id + `');">
-                                    <a href="./SuaDichVu.html"><i class="fas fa-edit"></i></a>
-                                </div>
-                                <div class="col-sm-4 delete">
-                                    <i onclick="deleteFunc('` + res[i].id + `')" class="fas fa-trash-alt"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        `;
-                }
-                document.getElementById('listDichVu').innerHTML = table;
-            },
-            fail: function(response) {}
+        loadListDV();
 
-        });
+        /*load danh sách dịch vụ*/
+        function loadListDV() {
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/hotel-services',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(res) {
+                    $("#listDichVu").empty();
+                    const len = res.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table += `
+                            <tr style="line-height:80px;">
+                                <th scope="row">` + res[i].id + `</th>
+                                <td>
+                                    <img src="../images/` + res[i].image + `" class="imgProduct" alt="User Image">
+                                </td>
+                                <td>` + res[i].name + `</td>
+                                <td>` + res[i].type + `</td>
+                                <td>` + res[i].price + ` VNĐ</td>
+                                <td class="row">
+                                    <div class="col-sm-4 edit" onclick = "clickDichVu('` + res[i].id + `');">
+                                        <a href="./SuaDichVu.html"><i class="fas fa-edit"></i></a>
+                                    </div>
+                                    <div class="col-sm-4 delete">
+                                        <i onclick="deleteFunc('` + res[i].id + `')" class="fas fa-trash-alt"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            `;
+                    }
+                    document.getElementById('listDichVu').innerHTML = table;
+                },
+                fail: function(response) {}
+
+            });
+
+            document.getElementById('selLoaiDV').children[0].selected = true;
+            document.getElementById('selGiaDV').children[0].selected = true;
+        }
 
         function clickDichVu(idDichvu) {
             sessionStorage.setItem('key1', idDichvu);
         }
 
+        /*xóa dịch vụ*/
         function deleteFunc(idDichVu) {
             let text = "Bạn có muốn xóa dịch này không?";
             if (confirm(text) == true) {
@@ -272,6 +285,91 @@
             } else {
                 return false
             }
+        }
+
+        /*lọc theo loại*/
+        function changeLoai() {
+            if ($("#selLoaiDV :selected").val() == "") {
+                return;
+            }
+
+            var data = {
+                "type": $("#selLoaiDV :selected").val()
+            }
+            filter(data);
+        }
+
+        /*lọc theo giá*/
+        function changeGia() {
+            var fromGia = 0,
+                toGia = 0;
+            switch ($("#selGiaDV :selected").val()) {
+
+                case "1":
+                    fromGia = 0;
+                    toGia = 49999;
+                    break;
+                case "2":
+                    fromGia = 50001;
+                    toGia = 150000;
+                    break;
+                case "3":
+                    fromGia = 150001;
+                    toGia = 300000;
+                    break;
+                case "4":
+                    fromGia = 300001;
+                    toGia = 1000000000;
+                    break;
+            }
+
+            var data = {
+                "priceFrom": fromGia,
+                "priceTo": toGia
+            }
+            filter(data);
+        }
+
+        /*lọc*/
+        function filter(val) {
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/hotel-services/filter',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(val),
+                error: function(res) {
+                    console.log(res);
+                },
+                success: function(res) {
+                    $("#listDichVu").empty();
+                    const len = res.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table += `
+                        <tr style="line-height:80px;">
+                            <th scope="row">` + res[i].id + `</th>
+                            <td>
+                                <img src="../images/` + res[i].image + `" class="imgProduct" alt="User Image">
+                            </td>
+                            <td>` + res[i].name + `</td>
+                            <td>` + res[i].type + `</td>
+                            <td>` + res[i].price + ` VNĐ</td>
+                            <td class="row">
+                                <div class="col-sm-4 edit" onclick = "clickDichVu('` + res[i].id + `');">
+                                    <a href="./SuaDichVu.html"><i class="fas fa-edit"></i></a>
+                                </div>
+                                <div class="col-sm-4 delete">
+                                    <i onclick="deleteFunc('` + res[i].id + `')" class="fas fa-trash-alt"></i>
+                                </div>
+                            </td>
+                        </tr>
+                            `;
+                    }
+                    document.getElementById('listDichVu').innerHTML = table;
+                },
+                fail: function(response) {}
+            });
         }
     </script>
 </body>
