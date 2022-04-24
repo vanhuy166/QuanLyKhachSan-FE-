@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>fahasa.com</title>
+    <title>CauGiay Hotel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -93,6 +93,12 @@
                                     <a href="./DanhSachDichVu.html" class="nav-link  active">
                                         <i class="far fa-square nav-icon"></i>
                                         <p>Danh sách dịch vụ</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="./DanhSachPhanHoi.html" class="nav-link">
+                                        <i class="fab fa-stack-exchange nav-icon"></i>
+                                        <p>Danh sách phản hồi</p>
                                     </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
@@ -243,10 +249,26 @@
         }
 
         function deleteFunc(idDichVu) {
-            let text = "Bạn có muốn xóa sản phẩm này không?";
+            let text = "Bạn có muốn xóa dịch này không?";
             if (confirm(text) == true) {
-                alert("Bạn đã xóa sản phẩm thành công!");
-                return true
+                var headers = "Bearer " + localStorage.getItem("token");
+                $.ajax({
+                    url: 'http://localhost:8083/api/v1/hotel-services/' + idDichVu,
+                    headers: {
+                        "Authorization": headers
+                    },
+                    type: 'DELETE',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    error: function(err) {
+                        alert("Xóa không thành công!");
+                        console.log('Error!', err)
+                    },
+                    success: function(data) {
+                        alert("Xóa thành công!");
+                        window.location = "./DanhSachDichVu.html";
+                    }
+                });
             } else {
                 return false
             }

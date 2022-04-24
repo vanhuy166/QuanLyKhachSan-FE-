@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Hoang Hon &mdash; Hotel</title>
+    <title>CauGiay Hotel</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -48,6 +48,43 @@
 <body>
 
     <div class="site-wrap">
+        <!-- Form đổi mật khẩu -->
+        <div id="modal" style=" display: none; position: fixed; top: 0;  left: 0;  right: 0;  bottom: 0;  background-color: rgba(0,0,0,0.3);   z-index: 100;">
+            <div style="margin: 120px auto;   width: 55%;    height: 65%; border-radius:10px;  background-color: white;">
+                <div class="row" style="padding-top:50px;">
+                    <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <h2>Đổi mật khẩu</h2>
+                    </div>
+                </div>
+
+                <div style="align-items:center; margin: 0 0 0 50%; transform: translateX(-35%); ">
+                    <table style="width:80%; height:250px;">
+                        <tr>
+                            <th>Email :</th>
+                            <td><input style="width: 100%;" type="text" id="txtEmail"></td>
+                        </tr>
+                        <tr>
+                            <th>Mật khẩu mới :</th>
+                            <td><input style="width: 100%;" type="password" id="txtNewPass"></td>
+                        </tr>
+                        <tr>
+                            <th>Xác nhận :</th>
+                            <td><input style="width: 100%;" type="password" id="txtRe_NewPass"></td>
+                        </tr>
+
+                        <tr style="margin-top:12px; text-align: center;">
+                            <th>
+                                <button style="min-width:70px;" type="button" class="btn btn-outline-danger" onclick="DoiMatKhau();">Đổi</button>
+                            </th>
+                            <td>
+                                <button style="min-width:70px;" type="button" class="btn btn-outline-danger" onclick="hideDoiMK();">Thoát</button>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <!-- .site-mobile-menu -->
         <div class="site-mobile-menu">
@@ -99,8 +136,8 @@
                                                 <img src="./images/person_1.jpg" width="50dp" height="	50dp" alt="" style="border-radius: 100px; ;">
                                                 <ul class="dropdown arrow-top">
                                                     <li><a href="#">user</a></li>
-                                                    <li id="Admin" style="display:none;"><a href="#">Admin</a></li>
                                                     <li><a href="./DanhSachPhongDat.html">Lịch sử </a></li>
+                                                    <li><a onclick="showDoiMK();">Đổi mật khẩu</a></li>
                                                     <li><a href="./DangNhap.html">Đăng xuất</a></li>
                                                 </ul>
                                             </li>
@@ -185,7 +222,6 @@
             </div>
         </div>
 
-
         <!-- Danh sách tính năng -->
         <div class="site-section">
             <div class="container">
@@ -266,6 +302,7 @@
             </div>
         </div>
 
+        <!-- bản đồ -->
         <div class="site-section">
             <div class="container">
                 <select id="selLanguages" class="buttonMap" onchange="changeLanguages()">
@@ -284,6 +321,7 @@
 
             </div>
         </div>
+
         <!-- phản hồi khách hàng -->
         <div class="site-section block-14 bg-light">
             <div class="container">
@@ -294,50 +332,7 @@
                 </div>
 
                 <div class="nonloop-block-14 owl-carousel" id="listPhanHoi">
-                    <div class="p-4">
-                        <div class="d-flex block-testimony">
-                            <div class="person mr-3">
-                                <img src="./images/person_1.jpg" alt="Image" class="img-fluid rounded">
-                            </div>
-                            <div>
-                                <h2 class="h5">Jane Mars</h2>
-                                <blockquote>&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias accusantium qui optio, possimus necessitatibus voluptate aliquam velit nostrum tempora ipsam!&rdquo;</blockquote>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <div class="d-flex block-testimony">
-                            <div class="person mr-3">
-                                <img src="./images/person_2.jpg" alt="Image" class="img-fluid rounded">
-                            </div>
-                            <div>
-                                <h2 class="h5">Jane Mars</h2>
-                                <blockquote>&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias accusantium qui optio, possimus necessitatibus voluptate aliquam velit nostrum tempora ipsam!&rdquo;</blockquote>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <div class="d-flex block-testimony">
-                            <div class="person mr-3">
-                                <img src="./images/person_3.jpg" alt="Image" class="img-fluid rounded">
-                            </div>
-                            <div>
-                                <h2 class="h5">Shane Holmes</h2>
-                                <blockquote>&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias accusantium qui optio, possimus necessitatibus voluptate aliquam velit nostrum tempora ipsam!&rdquo;</blockquote>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <div class="d-flex block-testimony">
-                            <div class="person mr-3">
-                                <img src="./images/person_4.jpg" alt="Image" class="img-fluid rounded">
-                            </div>
-                            <div>
-                                <h2 class="h5">Mark Johnson</h2>
-                                <blockquote>&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias accusantium qui optio, possimus necessitatibus voluptate aliquam velit nostrum tempora ipsam!&rdquo;</blockquote>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -413,14 +408,6 @@
     <script src="js/main.js"></script>
 
     <script>
-        // hiện quyền admin
-        var role = sessionStorage.getItem('role');
-        if (role == "admin") {
-            $("#Admin").css("display", "block");
-        } else {
-            $("#Admin").css("display", "none");
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             var mediaElements = document.querySelectorAll('video, audio'),
                 total = mediaElements.length;
@@ -441,49 +428,143 @@
         });
     </script>
 
+    <!-- Đổi mật khẩu -->
+    <script>
+        function showDoiMK() {
+            $("#modal").css("display", "block");
+        }
 
-    <!--  
-    <script src="~/Styles/js/owl.carousel.min.js"></script>
-    <script src="~/Styles/js/slick.min.js"></script>
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script> -->
+        function hideDoiMK() {
+            $("#modal").css("display", "none");
+            $('#txtEmail').val("");
+            $('#txtNewPass').val("");
+            $('#txtRe_NewPass').val("");
+        }
 
-    <!-- load danh sách phản hổi -->
+        function DoiMatKhau() {
+            var headers = "Bearer " + localStorage.getItem("token");
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/users/info',
+                headers: {
+                    "Authorization": headers
+                },
+                method: 'GET',
+                contentType: 'application/json',
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    if (data.email != $('#txtEmail').val()) {
+                        alert("Email không chính xác!");
+                        return;
+                    }
+
+                    if ($('#txtNewPass').val().trim() == "") {
+                        alert("Mật khẩu không được để trống!");
+                        return;
+                    }
+
+                    if ($('#txtNewPass').val() != $('#txtRe_NewPass').val()) {
+                        alert("Mật khẩu không khớp!");
+                        return;
+                    }
+
+                    var newUser = {
+                        "id": data.id,
+                        "password": $('#txtNewPass').val()
+                    }
+
+                    idUser = data.id;
+                    $.ajax({
+                        url: 'http://localhost:8083/api/v1/users/update',
+                        headers: {
+                            "Authorization": headers
+                        },
+                        method: 'PUT',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify(newUser),
+                        error: function(err) {
+                            alert("Đổi mật khẩu không thành công!");
+                            console.log(err);
+                        },
+                        success: function(data) {
+                            alert("Đổi mật khẩu thành công! Vui lòng đăng nhập lại!");
+                            window.location = "./DangNhap.html";
+                        },
+                        fail: function(response) {}
+                    });
+
+                },
+                fail: function(response) {}
+            });
+        }
+    </script>
+
+    <!-- load phản hồi -->
     <script>
         $.ajax({
-            url: 'https://localhost:44370/api/v1/feedback/all',
+            url: 'http://localhost:8083/api/v1/reviews',
             method: 'GET',
-            contentType: 'json',
-            dataType: 'json',
+            contentType: 'application/json',
             error: function(err) {
                 console.log(err);
             },
-            success: function(res) {
+            success: function(data) {
                 $("#listPhanHoi").empty();
-                const len = res.length;
-                console.log(res);
+                const len = data.length;
                 let table = '';
                 for (var i = 0; i < len; ++i) {
                     table += `
-                       <div class="p-4">
-                           <div class="d-flex block-testimony">
-                               <div class="person mr-3" >
-                                   <img style=" min-width: 150px;  height: 150px;" src="./images/person_` + Math.floor(Math.random() * 10) + `.jpg" alt="Image" class="img-fluid rounded">
-                               </div>
-                               <div style="flex:1;">
-                                   <h2 class="h5">` + res[i].TenTK + `</h2>
-                                   <blockquote>
-                                       &ldquo; ` + res[i].NoiDung + `&rdquo;
-                                   </blockquote>
-                               </div>
-                           </div>
-                       </div>
-                       `;
+                    <div class="p-4">
+                        <div class="d-flex block-testimony">
+                            <div class="person mr-3" >
+                                <img style=" min-width: 150px;  height: 150px;" src="./images/person_` + Math.floor(Math.random() * 10) + `.jpg" alt="Image" class="img-fluid rounded">
+                            </div>
+                            <div style="flex:1;">
+                                <h2 class="h5">` + data[i].username + `</h2>
+                                <h3 class="h6">&#40 ` + convertDateTime(data[i].created_date) + ` &#41</h3>
+                                <blockquote>
+                                    &ldquo; ` + data[i].content + `&rdquo;
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    `;
                 }
                 document.getElementById('listPhanHoi').innerHTML = table;
             },
             fail: function(response) {}
-
         });
+
+        function convertDateTime(timeUTC) {
+            var today = new Date(timeUTC);
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+            var yyyy = today.getFullYear();
+            var hours = today.getHours();
+            var minutes = today.getMinutes();
+            var seconds = today.getSeconds();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            if (hours < 10) {
+                hours = '0' + hours
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+
+            if (seconds < 10) {
+                seconds = '0' + seconds
+            }
+
+            return yyyy + '-' + mm + '-' + dd + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
     </script>
 
 

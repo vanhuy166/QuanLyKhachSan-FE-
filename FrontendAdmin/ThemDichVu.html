@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>fahasa.com</title>
+    <title>CauGiay Hotel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="dist/css/bootstrap.css">
@@ -65,7 +65,7 @@
             <!-- Brand Logo -->
             <a href="#" class="brand-link">
                 <img src="./img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">FAHASA.COM</span>
+                <span class="brand-text font-weight-light">CauGiay Hotel</span>
             </a>
 
             <!-- Sidebar -->
@@ -94,6 +94,12 @@
                                     <a href="./DanhSachDichVu.html" class="nav-link active">
                                         <i class="far fa-square nav-icon"></i>
                                         <p>Danh sách dịch vụ</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="./DanhSachPhanHoi.html" class="nav-link">
+                                        <i class="fab fa-stack-exchange nav-icon"></i>
+                                        <p>Danh sách phản hồi</p>
                                     </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
@@ -198,7 +204,7 @@
                 }
                 var headers = "Bearer " + localStorage.getItem("token");
                 $.ajax({
-                    url: '',
+                    url: 'http://localhost:8083/api/v1/hotel-services',
                     headers: {
                         "Authorization": headers
                     },
@@ -206,7 +212,7 @@
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     error: function(err) {
-                        alert("Thêm dịch không thành công!!!");
+                        alert("Thêm không thành công!!!");
                         console.log('Error!', err)
                     },
                     success: function(data) {

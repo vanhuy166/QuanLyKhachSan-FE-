@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Suite &mdash; Colorlib Website Template</title>
+    <title>CauGiay Hotel</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -25,6 +25,43 @@
 <body>
 
     <div class="site-wrap">
+        <!-- Form đổi mật khẩu -->
+        <div id="modal" style=" display: none; position: fixed; top: 0;  left: 0;  right: 0;  bottom: 0;  background-color: rgba(0,0,0,0.3);   z-index: 100;">
+            <div style="margin: 120px auto;   width: 55%;    height: 65%; border-radius:10px;  background-color: white;">
+                <div class="row" style="padding-top:50px;">
+                    <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <h2>Đổi mật khẩu</h2>
+                    </div>
+                </div>
+
+                <div style="align-items:center; margin: 0 0 0 50%; transform: translateX(-35%); ">
+                    <table style="width:80%; height:250px;">
+                        <tr>
+                            <th>Email :</th>
+                            <td><input style="width: 100%;" type="text" id="txtEmail"></td>
+                        </tr>
+                        <tr>
+                            <th>Mật khẩu mới :</th>
+                            <td><input style="width: 100%;" type="password" id="txtNewPass"></td>
+                        </tr>
+                        <tr>
+                            <th>Xác nhận :</th>
+                            <td><input style="width: 100%;" type="password" id="txtRe_NewPass"></td>
+                        </tr>
+
+                        <tr style="margin-top:12px; text-align: center;">
+                            <th>
+                                <button style="min-width:70px;" type="button" class="btn btn-outline-danger" onclick="DoiMatKhau();">Đổi</button>
+                            </th>
+                            <td>
+                                <button style="min-width:70px;" type="button" class="btn btn-outline-danger" onclick="hideDoiMK();">Thoát</button>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <!-- .site-mobile-menu -->
         <div class="site-mobile-menu">
@@ -73,8 +110,8 @@
                                                 <img src="./images/person_1.jpg" width="50dp" height="	50dp" alt="" style="border-radius: 100px; ;">
                                                 <ul class="dropdown arrow-top">
                                                     <li><a href="#">user</a></li>
-                                                    <li id="Admin" style="display:none;"><a href="#">Admin</a></li>
                                                     <li><a href="./DanhSachPhongDat.html">Lịch sử </a></li>
+                                                    <li><a onclick="showDoiMK();">Đổi mật khẩu</a></li>
                                                     <li><a href="./DangNhap.html">Đăng xuất</a></li>
                                                 </ul>
                                             </li>
@@ -121,10 +158,20 @@
                                     <h4>Bộ lọc</h4>
                                 </div>
                                 <div class="filter-room_header_item" style="flex: 1;">
-                                    <a href="#" id="clear_filter-room">Xóa tất cả lọc</a>
+                                    <a href="./DanhSachPhong.html" id="clear_filter-room">Xóa tất cả lọc</a>
                                 </div>
                             </div>
                             <div class="filter-room_body">
+                                <div class="filter-room_body-item">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" value="Phòng trống" onclick="availableToday(this);" name="phongTrong" id="availableToday">
+                                            </td>
+                                            <td><label for="availableToday">Phòng trống</label></td>
+                                        </tr>
+                                    </table>
+                                </div>
                                 <div class="filter-room_body-item">
                                     <h6>Loại phòng</h6>
                                     <table class="table table-hover">
@@ -172,21 +219,21 @@
                                     <table class="table table-hover">
                                         <tr>
                                             <td>
-                                                <input type="radio" name="SoNguoi" id="SoNguoi1">
+                                                <input onclick="handleClickSoNguoi(this);" value="1" type="radio" name="SoNguoi" id="SoNguoi1">
                                             </td>
-                                            <td><label for="SoNguoi1">Dưới 2 người</label></td>
+                                            <td><label for="SoNguoi1">Từ 1 - 2 người</label></td>
                                         </tr>
 
                                         <tr>
                                             <td>
-                                                <input type="radio" name="SoNguoi" id="SoNguoi2">
+                                                <input onclick="handleClickSoNguoi(this);" value="2" type="radio" name="SoNguoi" id="SoNguoi2">
                                             </td>
-                                            <td><label for="SoNguoi2">Từ 2 - 4 người</label></td>
+                                            <td><label for="SoNguoi2">Từ 3 - 4 người</label></td>
                                         </tr>
 
                                         <tr>
                                             <td>
-                                                <input type="radio" name="SoNguoi" id="SoNguoi3">
+                                                <input onclick="handleClickSoNguoi(this);" value="3" type="radio" name="SoNguoi" id="SoNguoi3">
                                             </td>
                                             <td><label for="SoNguoi3">Trên 4 người</label></td>
                                         </tr>
@@ -198,6 +245,20 @@
                     <!-- Danh sách phòng -->
                     <div class="col-10 list-room">
                         <div class="container">
+                            <div class="row" style="height:80px; justify-content:space-around;">
+                                <div>
+                                    <th>Từ ngày :</th>
+                                    <td> <input type="datetime-local" id="fromDate" onchange="fromDateChange()" name="fromDate"></td>
+                                </div>
+                                <div>
+                                    <th>Đến ngày :</th>
+                                    <td> <input type="datetime-local" id="toDate" onchange="toDateChange()" name="toDate"></td>
+                                </div>
+                                <div>
+                                    <td> <button style="min-width:120px;" class="btn btn-primary pill text-white px-4 btn-DatPhong" id="btn-CheckPhong" onclick="locPhong();">Lọc</button></td>
+                                </div>
+                            </div>
+
                             <div class="row" id="listRoom">
 
                             </div>
@@ -296,71 +357,88 @@
     <script src="js/main.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var mediaElements = document.querySelectorAll('video, audio'),
-                total = mediaElements.length;
-
-            for (var i = 0; i < total; i++) {
-                new MediaElementPlayer(mediaElements[i], {
-                    pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
-                    shimScriptAccess: 'always',
-                    success: function() {
-                        var target = document.body.querySelectorAll('.player'),
-                            targetTotal = target.length;
-                        for (var j = 0; j < targetTotal; j++) {
-                            target[j].style.visibility = 'visible';
-                        }
-                    }
-                });
+        $(document).ready(function() {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+            var yyyy = today.getFullYear();
+            var hours = today.getHours();
+            var minutes = today.getMinutes();
+            if (dd < 10) {
+                dd = '0' + dd;
             }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            if (hours < 10) {
+                hours = '0' + hours
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+            today = yyyy + '-' + mm + '-' + dd + 'T' + hours + ':' + minutes;
+            $('#fromDate').attr('min', today);
+            $('#toDate').attr('min', today);
+
         });
     </script>
 
     <script>
-        $.ajax({
-            url: 'http://localhost:8083/api/v1/rooms',
-            method: 'GET',
-            contentType: 'json',
-            dataType: 'json',
-            error: function(err) {
-                console.log(err);
-            },
-            success: function(data) {
-                $("#listRoom").empty();
-                const len = data.length;
-                let table = '';
-                for (var i = 0; i < len; ++i) {
-                    table += `
-                       <div class="col-md-6 col-lg-4 mb-5">
-                           <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
-                               <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
-                               <div class="hotel-room-body">
-                                   <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
-                                   <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
+        var startDate, endDate;
+        loadListRoom();
+
+        /* load danh sách phòng */
+        function loadListRoom() {
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/rooms',
+                method: 'GET',
+                contentType: 'json',
+                dataType: 'json',
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    $("#listRoom").empty();
+                    const len = data.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table += `
+                           <div class="col-md-6 col-lg-4 mb-5">
+                               <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
+                                   <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
+                                   <div class="hotel-room-body">
+                                       <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
+                                       <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
+                                   </div>
                                </div>
                            </div>
-                       </div>
-                       `;
-                }
-                document.getElementById('listRoom').innerHTML = table;
-            },
-            fail: function(response) {}
-        });
+                           `;
+                    }
+                    document.getElementById('listRoom').innerHTML = table;
+                },
+                fail: function(response) {}
+            });
 
-
+        }
 
         function clickRoom(idRoom) {
             sessionStorage.setItem('key', idRoom);
         }
 
-        function handleClick(myRadio) {
-            var data = {
-                "type": "VIP"
+        /* lọc phòng theo khoảng ngày */
+        function locPhong() {
+            if (!startDate || !endDate) {
+                alert("Hãy chọn mốc thời gian!");
+                return;
             }
 
+            var data = {
+                "startDate": startDate,
+                "endDate": endDate
+            }
             $.ajax({
-                url: 'http://localhost:8083/api/v1/rooms/filter',
-                method: 'GET',
+                url: 'http://localhost:8083/api/v1/rooms/available',
+                method: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
                 data: JSON.stringify(data),
@@ -368,61 +446,338 @@
                     console.log(err);
                 },
                 success: function(data) {
-                    alert("ok");
+                    $("#listRoom").empty();
+                    const len = data.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table += `
+                           <div class="col-md-6 col-lg-4 mb-5">
+                               <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
+                                   <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
+                                   <div class="hotel-room-body">
+                                       <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
+                                       <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
+                                   </div>
+                               </div>
+                           </div>
+                           `;
+                    }
+                    document.getElementById('listRoom').innerHTML = table;
                 },
                 fail: function(response) {}
-
             });
         }
 
+        /* phòng trống hôm nay */
+        function availableToday(myCheckBox) {
+            if (myCheckBox.checked) {
+                $.ajax({
+                    url: 'http://localhost:8083/api/v1/rooms/available-today',
+                    method: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    error: function(err) {
+                        console.log(err);
+                    },
+                    success: function(data) {
+                        $("#listRoom").empty();
+                        const len = data.length;
+                        let table = '';
+                        for (var i = 0; i < len; ++i) {
+                            table += `
+                               <div class="col-md-6 col-lg-4 mb-5">
+                                   <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
+                                       <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
+                                       <div class="hotel-room-body">
+                                           <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
+                                           <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
+                                       </div>
+                                   </div>
+                               </div>
+                               `;
+                        }
+                        document.getElementById('listRoom').innerHTML = table;
+                    },
+                    fail: function(response) {}
+                });
+            } else {
+                loadListRoom();
+            }
+        }
+
+        /* lọc theo loại phòng */
+        function handleClick(myRadio) {
+            var data = {
+                "type": myRadio.value
+            }
+            console.log(data)
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/rooms/filter',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    $("#listRoom").empty();
+                    const len = data.length;
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table += `
+                           <div class="col-md-6 col-lg-4 mb-5">
+                               <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
+                                   <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
+                                   <div class="hotel-room-body">
+                                       <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
+                                       <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
+                                   </div>
+                               </div>
+                           </div>
+                           `;
+                    }
+                    document.getElementById('listRoom').innerHTML = table;
+                },
+                fail: function(response) {}
+            });
+        }
+
+        /* lọc theo giá phòng */
         function handleClickGia(myRadio) {
             var fromGia = 0,
                 toGia = 0;
             switch (myRadio.value) {
                 case "1":
                     fromGia = 0;
-                    toGia = 500000;
+                    toGia = 499999;
                     break;
                 case "2":
                     fromGia = 500000;
                     toGia = 1000000;
                     break;
                 case "3":
-                    fromGia = 1000000;
+                    fromGia = 1000001;
                     toGia = 1000000000;
                     break;
             }
 
 
-            $.ajax({
-                url: 'https://localhost:44370/api/v1/room/byPrice?from=' + fromGia + '&to=' + toGia,
-                method: 'GET',
-                contentType: 'json',
-                dataType: 'json',
-                error: function(res) {
 
+            var data = {
+                "priceFrom": fromGia,
+                "priceTo": toGia
+            }
+
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/rooms/filter',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                error: function(err) {
+                    console.log(err);
                 },
-                success: function(res) {
+                success: function(data) {
                     $("#listRoom").empty();
-                    const len = res.length;
+                    const len = data.length;
                     let table = '';
                     for (var i = 0; i < len; ++i) {
                         table += `
-                       <div class="col-md-6 col-lg-4 mb-5">
-                           <div class="hotel-room text-center" onclick = "clickRoom('` + res[i].ID_Phong + `');">
-                               <a href="@Url.Action("RoomDetail","Rooms")" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + res[i].Anh + `" alt="Image" class="img-fluid"></a>
-                               <div class="hotel-room-body">
-                                   <h3 class="heading mb-0"><a href="@Url.Action("RoomDetail","Rooms")">` + res[i].TenPhong + `</a></h3>
-                                   <strong class="price">` + res[i].LoaiPhongs[0].Gia + ` VNĐ/ per night</strong>
+                           <div class="col-md-6 col-lg-4 mb-5">
+                               <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
+                                   <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
+                                   <div class="hotel-room-body">
+                                       <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
+                                       <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
+                                   </div>
                                </div>
                            </div>
-                       </div>
-                       `;
+                           `;
                     }
                     document.getElementById('listRoom').innerHTML = table;
                 },
                 fail: function(response) {}
+            });
+        }
 
+        /* lọc theo số người */
+        function handleClickSoNguoi(myRadio) {
+            var seatCountFrom = 0,
+                seatCountTo = 0;
+            switch (myRadio.value) {
+                case "1":
+                    seatCountFrom = 0;
+                    seatCountTo = 2;
+                    break;
+                case "2":
+                    seatCountFrom = 3;
+                    seatCountTo = 4;
+                    break;
+                case "3":
+                    seatCountFrom = 4;
+                    seatCountTo = 10;
+                    break;
+            }
+
+            var data = {
+                "seatCountFrom": seatCountFrom,
+                "seatCountTo": seatCountTo
+            }
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/rooms/filter',
+                method: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    $("#listRoom").empty();
+                    const len = data.length;
+                    console.log(data);
+                    let table = '';
+                    for (var i = 0; i < len; ++i) {
+                        table += `
+                           <div class="col-md-6 col-lg-4 mb-5">
+                               <div class="hotel-room text-center" onclick = "clickRoom('` + data[i].roomId + `');">
+                                   <a href="./ChiTietPhong.html" class="d-block mb-0 thumbnail" style="height:200px;"><img style="height:200px;" src="./images/` + data[i].image + `" alt="Image" class="img-fluid"></a>
+                                   <div class="hotel-room-body">
+                                       <h3 class="heading mb-0"><a href="./ChiTietPhong.html">` + data[i].name + `</a></h3>
+                                       <strong class="price">` + data[i].roomType.price + ` VNĐ/ per night</strong>
+                                   </div>
+                               </div>
+                           </div>
+                           `;
+                    }
+                    document.getElementById('listRoom').innerHTML = table;
+                },
+                fail: function(response) {}
+            });
+        }
+
+        function fromDateChange() {
+            var fromDate = new Date($('#fromDate').val());
+            var dd = fromDate.getDate();
+            var mm = fromDate.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+            var yyyy = fromDate.getFullYear();
+            var hours = fromDate.getHours();
+            var minutes = fromDate.getMinutes();
+
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            if (hours < 10) {
+                hours = '0' + hours
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+
+            var minToDate = yyyy + '-' + mm + '-' + dd + 'T' + hours + ':' + minutes;
+            $('#toDate').attr('min', minToDate);
+
+            startDate = yyyy + '-' + mm + '-' + dd + ' ' + hours + ':' + minutes + ":00";
+        }
+
+        function toDateChange() {
+            var fromDate = new Date($('#toDate').val());
+            var dd = fromDate.getDate();
+            var mm = fromDate.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+            var yyyy = fromDate.getFullYear();
+            var hours = fromDate.getHours();
+            var minutes = fromDate.getMinutes();
+
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            if (hours < 10) {
+                hours = '0' + hours
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+
+            endDate = yyyy + '-' + mm + '-' + dd + ' ' + hours + ':' + minutes + ":00";
+        }
+    </script>
+
+    <!-- Đổi mật khẩu -->
+    <script>
+        function showDoiMK() {
+            $("#modal").css("display", "block");
+        }
+
+        function hideDoiMK() {
+            $("#modal").css("display", "none");
+            $('#txtEmail').val("");
+            $('#txtNewPass').val("");
+            $('#txtRe_NewPass').val("");
+        }
+
+        function DoiMatKhau() {
+            var headers = "Bearer " + localStorage.getItem("token");
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/users/info',
+                headers: {
+                    "Authorization": headers
+                },
+                method: 'GET',
+                contentType: 'application/json',
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    if (data.email != $('#txtEmail').val()) {
+                        alert("Email không chính xác!");
+                        return;
+                    }
+
+                    if ($('#txtNewPass').val().trim() == "") {
+                        alert("Mật khẩu không được để trống!");
+                        return;
+                    }
+
+                    if ($('#txtNewPass').val() != $('#txtRe_NewPass').val()) {
+                        alert("Mật khẩu không khớp!");
+                        return;
+                    }
+
+                    var newUser = {
+                        "id": data.id,
+                        "password": $('#txtNewPass').val()
+                    }
+
+                    idUser = data.id;
+                    $.ajax({
+                        url: 'http://localhost:8083/api/v1/users/update',
+                        headers: {
+                            "Authorization": headers
+                        },
+                        method: 'PUT',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify(newUser),
+                        error: function(err) {
+                            alert("Đổi mật khẩu không thành công!");
+                            console.log(err);
+                        },
+                        success: function(data) {
+                            alert("Đổi mật khẩu thành công! Vui lòng đăng nhập lại!");
+                            window.location = "./DangNhap.html";
+                        },
+                        fail: function(response) {}
+                    });
+
+                },
+                fail: function(response) {}
             });
         }
     </script>

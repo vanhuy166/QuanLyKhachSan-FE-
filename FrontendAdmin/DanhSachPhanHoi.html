@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>CauGiay Hotel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="dist/css/bootstrap.css">
-    <link rel="stylesheet" href="style/styleChiTietHD_KH.css">
+    <link rel="stylesheet" href="style/styleIndex.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -36,12 +37,14 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
                         <span class="badge badge-danger navbar-badge">3</span>
                     </a>
                 </li>
+                <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
@@ -50,15 +53,16 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../DangNhap.html"> Đăng xuất <i class="nav-icon fas fa-sign-out-alt"></i>
-        </a>
+                    </a>
                 </li>
             </ul>
         </nav>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="index3.html" class="brand-link">
+        <aside class="main-sidebar sidebar-dark-info elevation-4">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link">
                 <img src="./img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">CauGiay Hotel</span>
             </a>
@@ -92,13 +96,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
-                                    <a href="./DanhSachPhanHoi.html" class="nav-link">
+                                    <a href="./DanhSachPhanHoi.html" class="nav-link active">
                                         <i class="fab fa-stack-exchange nav-icon"></i>
                                         <p>Danh sách phản hồi</p>
                                     </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
-                                    <a href="./KhachHang.html" class="nav-link active">
+                                    <a href="./KhachHang.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Khách hàng</p>
                                     </a>
@@ -119,76 +123,48 @@
                         </li>
                     </ul>
                 </nav>
+                <!-- /.sidebar-menu -->
             </div>
+            <!-- /.sidebar -->
         </aside>
 
-        <div class="content-wrapper content">
+        <!-- Content Header -->
+        <div class="content-wrapper content" style="padding-bottom: 0;">
             <div class="content-header">
                 <div class="container-fluid">
-                    <div class="row tittelKH">
-                        <div class="col-sm-11 tittel">
-                            <h5>Chi tiết hóa đơn 1</h5>
-                        </div>
-                        <div class="col-sm-1 back">
+                    <div class="row tittelSP">
+                        <div class="col-sm-6">
+                            <h5 class="m-0 text-dark">Phản hồi</h5>
                         </div>
                     </div>
-                    <div class="row Contact">
-                        <div class="col-sm-4">
-                        </div>
-                        <div class="col-sm-2 tittel">
-                            <p>Mã hàng: </p>
-                            <p>Tên hàng: </p>
-                            <p>Số lượng: </p>
-                            <p>Giá bán lẻ: </p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p>3223823672</p>
-                            <p>Truyện cổ tích</p>
-                            <p>2</p>
-                            <p>10.000đ</p>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row Contact">
-                        <div class="col-sm-4">
-                        </div>
-                        <div class="col-sm-2 tittel">
-                            <p>Mã hàng: </p>
-                            <p>Tên hàng: </p>
-                            <p>Số lượng: </p>
-                            <p>Giá bán lẻ: </p>
-                        </div>
-                        <div class="col-sm-2">
-                            <p>3223823672</p>
-                            <p>Truyện trinh thám</p>
-                            <p>1</p>
-                            <p>20.000đ</p>
-                        </div>
-                        <div class="col-sm-4">
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row Contact">
-                        <div class="col-sm-4">
-                        </div>
-                        <div class="col-sm-2 tittel">
-                            <p style="font-weight: 800;">Tổng tiền: </p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p style="font-weight: 800;">40.000đ</p>
-                        </div>
-                        <div class="col-sm-3">
-                        </div>
-                    </div>
+                    <div class="Table_wrapper" style="height: 582px;">
+                        <table class="table table-hover">
+                            <thead class="header">
+                                <tr>
+                                    <th scope="col">Mã phản hồi</th>
+                                    <th scope="col">Người phản hồi</th>
+                                    <th scope="col">Ngày phản hồi</th>
+                                    <th scope="col">Nội dung</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listPhanHoi">
 
-                    <div class="row back">
-                        <div class="col-sm-6">
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="./ChiTietKH.html" class="btnPro">Back</a>
-                        </div>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="Pagination">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0);">
+                                    <<</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0);">>></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -199,6 +175,96 @@
     </div>
     <script src="plugins/jquery/jquery.min.js"></script>
     <script src="dist/js/bootstrap.js"></script>
+    <script>
+        /* load danh sách phản hồi */
+        $.ajax({
+            url: 'http://localhost:8083/api/v1/reviews',
+            method: 'GET',
+            contentType: 'application/json',
+            error: function(err) {
+                console.log(err);
+            },
+            success: function(data) {
+                $("#listPhanHoi").empty();
+                const len = data.length;
+                let table = '';
+                for (var i = 0; i < len; ++i) {
+                    table += `
+                       <tr style="line-height:30px;">
+                            <th scope="row">` + data[i].id + `</th>
+                            <td>` + data[i].username + `</td>
+                            <td>` + convertDateTime(data[i].created_date) + `</td>
+                            <td>` + data[i].content + `</td>
+                            <td class="row" style="justify-content: center;">
+                                <div class="col-sm-4 delete">
+                                    <i onclick="deleteFunc('` + data[i].id + `')" class="fas fa-trash-alt"></i>
+                                </div>
+                            </td>
+                        </tr>
+                       `;
+                }
+                document.getElementById('listPhanHoi').innerHTML = table;
+            },
+            fail: function(response) {}
+        });
+
+        /*Xóa phản hồi*/
+        function deleteFunc(idPhanHoi) {
+            let text = "Bạn có muốn xóa phản hồi này không?";
+            if (confirm(text) == true) {
+                var headers = "Bearer " + localStorage.getItem("token");
+                $.ajax({
+                    url: 'http://localhost:8083/api/v1/reviews/' + idPhanHoi,
+                    headers: {
+                        "Authorization": headers
+                    },
+                    method: 'DELETE',
+                    contentType: 'application/json',
+                    error: function(err) {
+                        console.log(err);
+                    },
+                    success: function(data) {
+                        alert("Xóa thành công.");
+                        window.location = "./DanhSachPhanHoi.html";
+                    },
+                    fail: function(response) {}
+                });
+            } else {
+                return false;
+            }
+        }
+
+        function convertDateTime(timeUTC) {
+            var today = new Date(timeUTC);
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+            var yyyy = today.getFullYear();
+            var hours = today.getHours();
+            var minutes = today.getMinutes();
+            var seconds = today.getSeconds();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            if (hours < 10) {
+                hours = '0' + hours
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+
+            if (seconds < 10) {
+                seconds = '0' + seconds
+            }
+
+            return yyyy + '-' + mm + '-' + dd + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
+    </script>
+
+
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Hoang Hon &mdash; Hotel</title>
+    <title>CauGiay Hotel</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -24,6 +24,43 @@
 <body>
 
     <div class="site-wrap">
+        <!-- Form đổi mật khẩu -->
+        <div id="modal" style=" display: none; position: fixed; top: 0;  left: 0;  right: 0;  bottom: 0;  background-color: rgba(0,0,0,0.3);   z-index: 100;">
+            <div style="margin: 120px auto;   width: 55%;    height: 65%; border-radius:10px;  background-color: white;">
+                <div class="row" style="padding-top:50px;">
+                    <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <h2>Đổi mật khẩu</h2>
+                    </div>
+                </div>
+
+                <div style="align-items:center; margin: 0 0 0 50%; transform: translateX(-35%); ">
+                    <table style="width:80%; height:250px;">
+                        <tr>
+                            <th>Email :</th>
+                            <td><input style="width: 100%;" type="text" id="txtEmail"></td>
+                        </tr>
+                        <tr>
+                            <th>Mật khẩu mới :</th>
+                            <td><input style="width: 100%;" type="password" id="txtNewPass"></td>
+                        </tr>
+                        <tr>
+                            <th>Xác nhận :</th>
+                            <td><input style="width: 100%;" type="password" id="txtRe_NewPass"></td>
+                        </tr>
+
+                        <tr style="margin-top:12px; text-align: center;">
+                            <th>
+                                <button style="min-width:70px;" type="button" class="btn btn-outline-danger" onclick="DoiMatKhau();">Đổi</button>
+                            </th>
+                            <td>
+                                <button style="min-width:70px;" type="button" class="btn btn-outline-danger" onclick="hideDoiMK();">Thoát</button>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <!-- .site-mobile-menu -->
         <div class="site-mobile-menu">
@@ -75,8 +112,8 @@
                                                 <img src="./images/person_1.jpg" width="50dp" height="	50dp" alt="" style="border-radius: 100px; ;">
                                                 <ul class="dropdown arrow-top">
                                                     <li><a href="#">user</a></li>
-                                                    <li id="Admin" style="display:none;"><a href="#">Admin</a></li>
                                                     <li><a href="./DanhSachPhongDat.html">Lịch sử </a></li>
+                                                    <li><a onclick="showDoiMK();">Đổi mật khẩu</a></li>
                                                     <li><a href="./DangNhap.html">Đăng xuất</a></li>
                                                 </ul>
                                             </li>
@@ -236,30 +273,12 @@
     <script src="js/main.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var mediaElements = document.querySelectorAll('video, audio'),
-                total = mediaElements.length;
-
-            for (var i = 0; i < total; i++) {
-                new MediaElementPlayer(mediaElements[i], {
-                    pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
-                    shimScriptAccess: 'always',
-                    success: function() {
-                        var target = document.body.querySelectorAll('.player'),
-                            targetTotal = target.length;
-                        for (var j = 0; j < targetTotal; j++) {
-                            target[j].style.visibility = 'visible';
-                        }
-                    }
-                });
-            }
-        });
-    </script>
-    <script>
         var headers = "Bearer " + localStorage.getItem("token");
         var roomCharge = 0;
+
+        /* load danh sách phòng đặt */
         $.ajax({
-            url: 'http://localhost:8083/api/v1/bookings',
+            url: 'http://localhost:8083/api/v1/bookings/user-bookings',
             headers: {
                 "Authorization": headers
             },
@@ -273,27 +292,28 @@
                 const len = data.length;
                 let table = '';
                 for (var i = 0; i < len; ++i) {
-                    var listBookRoom = data[i].bookingDetails;
-                    var lenBook = listBookRoom.length;
-                    for (var j = 0; j < lenBook; ++j) {
-                        const startDate = listBookRoom[j].startDate;
-                        const endDate = listBookRoom[j].endDate;
+                    if (data[i].paymentState == "UNPAID") {
+                        var listBookRoom = data[i].bookingDetails;
+                        var lenBook = listBookRoom.length;
+                        for (var j = 0; j < lenBook; ++j) {
+                            const startDate = listBookRoom[j].startDate;
+                            const endDate = listBookRoom[j].endDate;
 
-                        const t1 = new Date(startDate);
-                        const t2 = new Date(endDate);
-                        const datediff = parseInt(Math.abs(t2.getTime() - t1.getTime()) / (24 * 60 * 60 * 1000) + 1);
+                            const t1 = new Date(startDate);
+                            const t2 = new Date(endDate);
+                            const datediff = parseInt(Math.abs(t2.getTime() - t1.getTime()) / (24 * 60 * 60 * 1000) + 1);
 
-                        $.ajax({
-                            url: 'http://localhost:8083/api/v1/rooms/' + listBookRoom[j].roomId,
-                            method: 'GET',
-                            contentType: 'json',
-                            dataType: 'json',
-                            error: function(err) {
-                                console.log(err);
-                            },
-                            success: function(data) {
-                                roomCharge += datediff * parseFloat(data.roomType.price);
-                                table += `
+                            $.ajax({
+                                url: 'http://localhost:8083/api/v1/rooms/' + listBookRoom[j].roomId,
+                                method: 'GET',
+                                contentType: 'json',
+                                dataType: 'json',
+                                error: function(err) {
+                                    console.log(err);
+                                },
+                                success: function(data) {
+                                    roomCharge += datediff * parseFloat(data.roomType.price);
+                                    table += `
                                 <tr>
                                     <th scope="row">
                                         <img src="./images/` + data.image + `" width="50dp" height="40dp" alt=""> ` + data.name + `
@@ -307,8 +327,8 @@
                                     <td><button type="button" class="btn btn-outline-danger" onclick="huybtn('')">Hủy</button></td>
                                 </tr>
                                    `;
-                                document.getElementById('allHistory').innerHTML = table;
-                                document.getElementById('tinhTien').innerHTML = `<tr>
+                                    document.getElementById('allHistory').innerHTML = table;
+                                    document.getElementById('tinhTien').innerHTML = `<tr>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
@@ -316,11 +336,12 @@
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col">` + roomCharge + ` VNĐ</th>
-                                    <th scope="col"> <button type="button" class="btn btn-outline-danger" onclick="ThanhToan()">Đặt</button></td>
+                                    <td scope="col"> <button type="button" class="btn btn-outline-danger" onclick="ThanhToan()">Đặt</button></td>
                                 </tr>`;
-                            },
-                            fail: function(response) {}
-                        });
+                                },
+                                fail: function(response) {}
+                            });
+                        }
                     }
                 }
                 console.log(roomCharge)
@@ -335,6 +356,79 @@
 
         function ThanhToan() {
             alert("thanh toán")
+        }
+    </script>
+
+    <!-- Đổi mật khẩu -->
+    <script>
+        function showDoiMK() {
+            $("#modal").css("display", "block");
+        }
+
+        function hideDoiMK() {
+            $("#modal").css("display", "none");
+            $('#txtEmail').val("");
+            $('#txtNewPass').val("");
+            $('#txtRe_NewPass').val("");
+        }
+
+        function DoiMatKhau() {
+            var headers = "Bearer " + localStorage.getItem("token");
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/users/info',
+                headers: {
+                    "Authorization": headers
+                },
+                method: 'GET',
+                contentType: 'application/json',
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    if (data.email != $('#txtEmail').val()) {
+                        alert("Email không chính xác!");
+                        return;
+                    }
+
+                    if ($('#txtNewPass').val().trim() == "") {
+                        alert("Mật khẩu không được để trống!");
+                        return;
+                    }
+
+                    if ($('#txtNewPass').val() != $('#txtRe_NewPass').val()) {
+                        alert("Mật khẩu không khớp!");
+                        return;
+                    }
+
+                    var newUser = {
+                        "id": data.id,
+                        "password": $('#txtNewPass').val()
+                    }
+
+                    idUser = data.id;
+                    $.ajax({
+                        url: 'http://localhost:8083/api/v1/users/update',
+                        headers: {
+                            "Authorization": headers
+                        },
+                        method: 'PUT',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify(newUser),
+                        error: function(err) {
+                            alert("Đổi mật khẩu không thành công!");
+                            console.log(err);
+                        },
+                        success: function(data) {
+                            alert("Đổi mật khẩu thành công! Vui lòng đăng nhập lại!");
+                            window.location = "./DangNhap.html";
+                        },
+                        fail: function(response) {}
+                    });
+
+                },
+                fail: function(response) {}
+            });
         }
     </script>
 

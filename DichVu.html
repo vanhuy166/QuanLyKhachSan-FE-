@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Suite &mdash; Colorlib Website Template</title>
+    <title>CauGiay Hotel</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -25,6 +25,43 @@
 <body>
 
     <div class="site-wrap">
+        <!-- Form đổi mật khẩu -->
+        <div id="modal" style=" display: none; position: fixed; top: 0;  left: 0;  right: 0;  bottom: 0;  background-color: rgba(0,0,0,0.3);   z-index: 100;">
+            <div style="margin: 120px auto;   width: 55%;    height: 65%; border-radius:10px;  background-color: white;">
+                <div class="row" style="padding-top:50px;">
+                    <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <h2>Đổi mật khẩu</h2>
+                    </div>
+                </div>
+
+                <div style="align-items:center; margin: 0 0 0 50%; transform: translateX(-35%); ">
+                    <table style="width:80%; height:250px;">
+                        <tr>
+                            <th>Email :</th>
+                            <td><input style="width: 100%;" type="text" id="txtEmail"></td>
+                        </tr>
+                        <tr>
+                            <th>Mật khẩu mới :</th>
+                            <td><input style="width: 100%;" type="password" id="txtNewPass"></td>
+                        </tr>
+                        <tr>
+                            <th>Xác nhận :</th>
+                            <td><input style="width: 100%;" type="password" id="txtRe_NewPass"></td>
+                        </tr>
+
+                        <tr style="margin-top:12px; text-align: center;">
+                            <th>
+                                <button style="min-width:70px;" type="button" class="btn btn-outline-danger" onclick="DoiMatKhau();">Đổi</button>
+                            </th>
+                            <td>
+                                <button style="min-width:70px;" type="button" class="btn btn-outline-danger" onclick="hideDoiMK();">Thoát</button>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <!-- .site-mobile-menu -->
         <div class="site-mobile-menu">
@@ -77,8 +114,8 @@
                                                 <img src="./images/person_1.jpg" width="50dp" height="	50dp" alt="" style="border-radius: 100px; ;">
                                                 <ul class="dropdown arrow-top">
                                                     <li><a href="#">user</a></li>
-                                                    <li id="Admin" style="display:none;"><a href="#">Admin</a></li>
                                                     <li><a href="./DanhSachPhongDat.html">Lịch sử </a></li>
+                                                    <li><a onclick="showDoiMK();">Đổi mật khẩu</a></li>
                                                     <li><a href="./DangNhap.html">Đăng xuất</a></li>
 
 
@@ -133,30 +170,42 @@
                                     <table class="table table-hover">
                                         <tr>
                                             <td>
-                                                <input type="radio" onclick="handleClick(this);" value="Sức khỏe" name="LoaiDV" id="DVDoUong">
+                                                <input type="radio" onclick="handleClick(this);" value="Sức khỏe" name="LoaiDV" id="SucKhoe">
                                             </td>
-                                            <td><label for="DVDoUong">Sức khỏe</label></td>
+                                            <td><label for="SucKhoe">Sức khỏe</label></td>
                                         </tr>
 
                                         <tr>
                                             <td>
-                                                <input type="radio" onclick="handleClick(this);" value="Giải trí" name="LoaiDV" id="DVDoAn">
+                                                <input type="radio" onclick="handleClick(this);" value="Giải trí" name="LoaiDV" id="GiaiTri">
                                             </td>
-                                            <td><label for="DVDoAn">Giải trí</label></td>
+                                            <td><label for="GiaiTri">Giải trí</label></td>
                                         </tr>
 
                                         <tr>
                                             <td>
-                                                <input type="radio" onclick="handleClick(this);" value="Thể thao" name="LoaiDV" id="DVGiaLa">
+                                                <input type="radio" onclick="handleClick(this);" value="Thể thao" name="LoaiDV" id="TheThao">
                                             </td>
-                                            <td><label for="DVGiaLa">Thể thao</label></td>
+                                            <td><label for="TheThao">Thể thao</label></td>
                                         </tr>
 
                                         <tr>
                                             <td>
-                                                <input type="radio" onclick="handleClick(this);" value="Vệ sinh" name="LoaiDV" id="DVMassage">
+                                                <input type="radio" onclick="handleClick(this);" value="Vệ sinh" name="LoaiDV" id="VeSinh">
                                             </td>
-                                            <td><label for="DVMassage">Vệ sinh</label></td>
+                                            <td><label for="VeSinh">Vệ sinh</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="radio" onclick="handleClick(this);" value="Giáo dục" name="LoaiDV" id="GiaoDuc">
+                                            </td>
+                                            <td><label for="GiaoDuc">Giáo dục</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="radio" onclick="handleClick(this);" value="Vận tải" name="LoaiDV" id="VanTai">
+                                            </td>
+                                            <td><label for="VanTai">Vận tải</label></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -174,19 +223,19 @@
                                             <td>
                                                 <input value="2" onclick="handleClickGia(this);" type="radio" name="GiaDV" id="GiaDV2">
                                             </td>
-                                            <td><label for="GiaDV2">50.000 đến 100.000VND</label></td>
+                                            <td><label for="GiaDV2">50.000 đến 150.000VND</label></td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <input value="3" onclick="handleClickGia(this);" type="radio" name="GiaDV" id="GiaDV3">
                                             </td>
-                                            <td><label for="GiaDV3">100.000 đến 200.000VND</label></td>
+                                            <td><label for="GiaDV3">150.000 đến 300.000VND</label></td>
                                         </tr>
                                         <tr>
                                             <td>
                                                 <input value="4" onclick="handleClickGia(this);" type="radio" name="GiaDV" id="GiaDV4">
                                             </td>
-                                            <td><label for="GiaDV4">trên 200.000 VNĐ</label></td>
+                                            <td><label for="GiaDV4">trên 300.000 VNĐ</label></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -292,6 +341,7 @@
     <script src="js/main.js"></script>
 
     <script>
+        /* load danh sách dịch vụ */
         $.ajax({
             url: 'http://localhost:8083/api/v1/hotel-services',
             method: 'GET',
@@ -329,14 +379,19 @@
             sessionStorage.setItem('key1', idDichvu);
         }
 
+        /* lọc theo loại dịch vụ */
         function handleClick(myRadio) {
+            var data = {
+                "type": myRadio.value
+            }
             $.ajax({
-                url: 'https://localhost:44370/api/v1/hotelServices/byType?type=' + myRadio.value,
-                method: 'GET',
-                contentType: 'json',
+                url: 'http://localhost:8083/api/v1/hotel-services/filter',
+                method: 'POST',
+                contentType: 'application/json',
                 dataType: 'json',
+                data: JSON.stringify(data),
                 error: function(res) {
-
+                    console.log(res);
                 },
                 success: function(res) {
                     $("#listDichVu").empty();
@@ -344,56 +399,61 @@
                     let table = '';
                     for (var i = 0; i < len; ++i) {
                         table += `
-                        <div class="col-md-6 col-lg-4 mb-5">
-                            <div class="hotel-room text-center">
-                                <a href="#" class="d-block mb-0 thumbnail"><img src="./images/` + res[i].Anh + `" alt="Image" class="img-fluid img-service"></a>
-                                <div class="hotel-room-body">
-                                    <h3 class="heading mb-0"><a href="#">` + res[i].Ten + `</a></h3>
-                                    <strong class="price">` + res[i].Gia + ` VNĐ</strong>
-                                    
-                                    <p onclick="clickDv('` + res[i].ID_DichVu + `')"><a   href= "@Url.Action("Eventsct", "Events")" class="btn btn-primary pill text-white px-4">Buy Now</a></p>
+                            <div class="col-md-6 col-lg-4 mb-5">
+                                <div class="hotel-room text-center"  onclick="clickDv('` + res[i].id + `')">
+                                    <a href="./ChiTietDichVu.html" class="d-block mb-0 thumbnail"><img src="./images/` + res[i].image + `" alt="Image" class="img-fluid img-service"></a>
+                                    <div class="hotel-room-body">
+                                        <h3 class="heading mb-0"><a href="#">` + res[i].name + `</a></h3>
+                                        <strong class="price">` + res[i].price + ` VNĐ</strong>
+                                        <p>` + res[i].type + `</p>
+                                        <br>
+                                        <p><a   href= "./ChiTietDichVu.html" class="btn btn-primary pill text-white px-4">Buy Now</a></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        `;
+                            `;
                     }
                     document.getElementById('listDichVu').innerHTML = table;
                 },
                 fail: function(response) {}
-
             });
         }
 
+        /* lọc theo giá dịch vụ */
         function handleClickGia(myRadio) {
-
             var fromGia = 0,
                 toGia = 0;
             switch (myRadio.value) {
                 case "1":
                     fromGia = 0;
-                    toGia = 50000;
+                    toGia = 49999;
                     break;
                 case "2":
                     fromGia = 50001;
-                    toGia = 100000;
+                    toGia = 150000;
                     break;
                 case "3":
-                    fromGia = 100001;
-                    toGia = 200000;
+                    fromGia = 150001;
+                    toGia = 300000;
                     break;
                 case "4":
-                    fromGia = 200001;
+                    fromGia = 300001;
                     toGia = 1000000000;
                     break;
             }
 
+            var data = {
+                "priceFrom": fromGia,
+                "priceTo": toGia
+            }
             $.ajax({
-                url: 'https://localhost:44370/api/v1/hotelServices/byPrice?from=' + fromGia + '&to=' + toGia,
-                method: 'GET',
-                contentType: 'json',
+                url: 'http://localhost:8083/api/v1/hotel-services/filter',
+                method: 'POST',
+                contentType: 'application/json',
                 dataType: 'json',
+                data: JSON.stringify(data),
                 error: function(res) {
-
+                    console.log(res);
                 },
                 success: function(res) {
                     $("#listDichVu").empty();
@@ -402,13 +462,14 @@
                     for (var i = 0; i < len; ++i) {
                         table += `
                         <div class="col-md-6 col-lg-4 mb-5">
-                            <div class="hotel-room text-center">
-                                <a href="#" class="d-block mb-0 thumbnail"><img src="./images/` + res[i].Anh + `" alt="Image" class="img-fluid img-service"></a>
+                            <div class="hotel-room text-center"  onclick="clickDv('` + res[i].id + `')">
+                                <a href="./ChiTietDichVu.html" class="d-block mb-0 thumbnail"><img src="./images/` + res[i].image + `" alt="Image" class="img-fluid img-service"></a>
                                 <div class="hotel-room-body">
-                                    <h3 class="heading mb-0"><a href="#">` + res[i].Ten + `</a></h3>
-                                    <strong class="price">` + res[i].Gia + ` VNĐ</strong>
-    
-                                    <p onclick="clickDv('` + res[i].ID_DichVu + `')"><a   href= "@Url.Action("Eventsct", "Events")" class="btn btn-primary pill text-white px-4">Buy Now</a></p>
+                                    <h3 class="heading mb-0"><a href="#">` + res[i].name + `</a></h3>
+                                    <strong class="price">` + res[i].price + ` VNĐ</strong>
+                                    <p>` + res[i].type + `</p>
+                                    <br>
+                                    <p><a   href= "./ChiTietDichVu.html" class="btn btn-primary pill text-white px-4">Buy Now</a></p>
                                 </div>
                             </div>
                         </div>
@@ -417,11 +478,82 @@
                     document.getElementById('listDichVu').innerHTML = table;
                 },
                 fail: function(response) {}
-
             });
         }
     </script>
 
+    <!-- Đổi mật khẩu -->
+    <script>
+        function showDoiMK() {
+            $("#modal").css("display", "block");
+        }
+
+        function hideDoiMK() {
+            $("#modal").css("display", "none");
+            $('#txtEmail').val("");
+            $('#txtNewPass').val("");
+            $('#txtRe_NewPass').val("");
+        }
+
+        function DoiMatKhau() {
+            var headers = "Bearer " + localStorage.getItem("token");
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/users/info',
+                headers: {
+                    "Authorization": headers
+                },
+                method: 'GET',
+                contentType: 'application/json',
+                error: function(err) {
+                    console.log(err);
+                },
+                success: function(data) {
+                    if (data.email != $('#txtEmail').val()) {
+                        alert("Email không chính xác!");
+                        return;
+                    }
+
+                    if ($('#txtNewPass').val().trim() == "") {
+                        alert("Mật khẩu không được để trống!");
+                        return;
+                    }
+
+                    if ($('#txtNewPass').val() != $('#txtRe_NewPass').val()) {
+                        alert("Mật khẩu không khớp!");
+                        return;
+                    }
+
+                    var newUser = {
+                        "id": data.id,
+                        "password": $('#txtNewPass').val()
+                    }
+
+                    idUser = data.id;
+                    $.ajax({
+                        url: 'http://localhost:8083/api/v1/users/update',
+                        headers: {
+                            "Authorization": headers
+                        },
+                        method: 'PUT',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify(newUser),
+                        error: function(err) {
+                            alert("Đổi mật khẩu không thành công!");
+                            console.log(err);
+                        },
+                        success: function(data) {
+                            alert("Đổi mật khẩu thành công! Vui lòng đăng nhập lại!");
+                            window.location = "./DangNhap.html";
+                        },
+                        fail: function(response) {}
+                    });
+
+                },
+                fail: function(response) {}
+            });
+        }
+    </script>
 
 </body>
 

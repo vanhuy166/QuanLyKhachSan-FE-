@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>fahasa.com</title>
+    <title>CauGiay Hotel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -98,6 +98,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
+                                    <a href="./DanhSachPhanHoi.html" class="nav-link">
+                                        <i class="fab fa-stack-exchange nav-icon"></i>
+                                        <p>Danh sách phản hồi</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
                                     <a href="./KhachHang.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Khách hàng</p>
@@ -182,7 +188,7 @@
                                 </tr>
                                 <tr>
                                     <th>Giá dịch vụ:</th>
-                                    <td><input type="text" id="txtTenPhong" value="` + data.price + `" required /> VNĐ</td>
+                                    <td><input type="text" id="txtGiaDichVu" value="` + data.price + `" required /> VNĐ</td>
                                 </tr>
 
                                 <tr>
@@ -223,7 +229,32 @@
 
 
         function SuaDichVu() {
-
+            var data = {
+                "id": idDichvu,
+                "name": $('#txtTenPhong').val(),
+                "image": img,
+                "type": $('#sel :selected').val(),
+                "price": $('#txtGiaDichVu').val()
+            }
+            var headers = "Bearer " + localStorage.getItem("token");
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/hotel-services',
+                headers: {
+                    "Authorization": headers
+                },
+                type: 'PUT',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                error: function(err) {
+                    alert("Sửa không thành công!!!");
+                    console.log('Error!', err)
+                },
+                success: function(data) {
+                    alert("Sửa thành công!!!");
+                    window.location = "./DanhSachDichVu.html";
+                }
+            });
         }
     </script>
 </body>
