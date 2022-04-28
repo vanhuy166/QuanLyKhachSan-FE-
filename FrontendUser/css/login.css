@@ -3,17 +3,11 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    background-size: cover;
-    background-image: url(https://cafebiz.cafebizcdn.vn/162123310254002176/2020/7/30/10237632531677338065902776227669564146919983n-159195314299898026978-15960821099871068256115.png)
-}
-
 .content {
     width: 1280px;
     max-width: 100%;
     margin: 0 auto;
+    z-index: 100;
 }
 
 .shadow-box {

@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="./fonts/flaticon/font/flaticon.css">
     <link rel="stylesheet" href="./css/aos.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/login.css">
 
 </head>
 
@@ -63,6 +64,82 @@
             </div>
         </div>
 
+        <!-- đăng nhập -->
+        <div class="modal" id="modalDangNhap">
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="signup-wrapper shadow-box">
+                        <div class="company-details ">
+                            <div class="shadow"></div>
+                            <div class="wrapper-1">
+                                <div class="logo">
+                                    <div class="icon-food">
+                                    </div>
+                                </div>
+                                <h1 class="title">ROOM co.</h1>
+                                <div class="slogan">We are number 2, no one is number 1.</div>
+                            </div>
+                        </div>
+                        <div class="signup-form">
+                            <!-- đăng nhập -->
+                            <div id="formDangNhap" class="wrapper-2" style="position: relative; display: block;">
+                                <p onclick="hideDangNhap();" style="cursor: pointer; position:absolute; top:0px; right:8px; font-weight:600; display:block; font-size:1.4rem;">X</p>
+                                <div class="form-title">Đăng nhập!</div>
+                                <div class="form">
+                                    <form>
+                                        <p class="content-item">
+                                            <label>Tài khoản</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="username" type="text" name="email">
+                                        </p>
+
+                                        <p class="content-item">
+
+                                            <label>Mật khẩu</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="password" type="password" name="psw">
+                                        </p>
+                                    </form>
+                                    <button onClick="DangNhap()" id="login" class="signup">Đăng nhập</button>
+                                    <a onClick="showFormDangKy()" class="login">Đăng ký</a>
+                                    <div class="google-btn" onClick="LoginWithGoogle();">
+                                        <div class="google-icon-wrapper">
+                                            <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+                                        </div>
+                                        <p class="btn-text"><b>Sign in with google</b></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="formDangKy" class="wrapper-2" style="position: relative; display: none;">
+                                <p onclick="hideDangNhap();" style="cursor: pointer; position:absolute; top:0px; right:8px; font-weight:600; display:block; font-size:1.4rem;">X</p>
+                                <div class="form-title">Đăng ký!</div>
+                                <div class="form">
+                                    <form>
+                                        <p class="content-item">
+                                            <label>Tài khoản</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="usernameDK" type="text" required>
+                                        </p>
+
+                                        <p class="content-item">
+                                            <label>Email</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="emailDK" type="text" name="email" required>
+                                        </p>
+
+                                        <p class="content-item">
+
+                                            <label>Mật khẩu</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="passwordDK" type="password" name="psw" required>
+                                        </p>
+                                    </form>
+                                    <button onclick="DangKy();" id="signup" class="signup">Đăng ký</button>
+                                    <a onClick="showFormDangNhap();" class="login">Đăng nhập</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- .site-mobile-menu -->
         <div class="site-mobile-menu">
             <div class="site-mobile-menu-header">
@@ -72,7 +149,6 @@
             </div>
             <div class="site-mobile-menu-body"></div>
         </div>
-
 
         <!-- menu -->
         <div class="site-navbar-wrap js-site-navbar bg-white">
@@ -101,24 +177,19 @@
                                                     <li><a href="./DanhSachPhong.html">Phòng đơn</a></li>
                                                     <li><a href="./DanhSachPhong.html">Phòng đôi</a></li>
                                                     <li><a href="./DanhSachPhong.html">Phòng gia đình</a></li>
-
-
                                                 </ul>
                                             </li>
                                             <li class="active"><a href="./DichVu.html">Dịch vụ</a></li>
                                             <li><a href="./ThongTin.html">Thông tin</a></li>
                                             <li><a href="./LienHe.html">Liên hệ</a></li>
-
-
-                                            <li class="has-children">
+                                            <li class="MenuLogin" id="MenuLogin"><a onclick="showFormDangNhap();">Đăng nhập</a>|<a onclick="showFormDangKy();">Đăng ký</a></li>
+                                            <li class="has-children MenuUser" id="MenuUser" style="display:none;">
                                                 <img src="./images/person_1.jpg" width="50dp" height="	50dp" alt="" style="border-radius: 100px; ;">
                                                 <ul class="dropdown arrow-top">
                                                     <li><a href="#">user</a></li>
                                                     <li><a href="./DanhSachPhongDat.html">Lịch sử </a></li>
                                                     <li><a onclick="showDoiMK();">Đổi mật khẩu</a></li>
-                                                    <li><a href="./DangNhap.html">Đăng xuất</a></li>
-
-
+                                                    <li><a onclick="DangXuat();">Đăng xuất</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -339,6 +410,7 @@
     <script src="js/aos.js"></script>
     <script src="js/mediaelement-and-player.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
 
     <script>
         /* load danh sách dịch vụ */
@@ -455,78 +527,7 @@
         }
     </script>
 
-    <!-- Đổi mật khẩu -->
-    <script>
-        function showDoiMK() {
-            $("#modal").css("display", "block");
-        }
 
-        function hideDoiMK() {
-            $("#modal").css("display", "none");
-            $('#txtEmail').val("");
-            $('#txtNewPass').val("");
-            $('#txtRe_NewPass').val("");
-        }
-
-        function DoiMatKhau() {
-            var headers = "Bearer " + localStorage.getItem("token");
-            $.ajax({
-                url: 'http://localhost:8083/api/v1/users/info',
-                headers: {
-                    "Authorization": headers
-                },
-                method: 'GET',
-                contentType: 'application/json',
-                error: function(err) {
-                    console.log(err);
-                },
-                success: function(data) {
-                    if (data.email != $('#txtEmail').val()) {
-                        alert("Email không chính xác!");
-                        return;
-                    }
-
-                    if ($('#txtNewPass').val().trim() == "") {
-                        alert("Mật khẩu không được để trống!");
-                        return;
-                    }
-
-                    if ($('#txtNewPass').val() != $('#txtRe_NewPass').val()) {
-                        alert("Mật khẩu không khớp!");
-                        return;
-                    }
-
-                    var newUser = {
-                        "id": data.id,
-                        "password": $('#txtNewPass').val()
-                    }
-
-                    idUser = data.id;
-                    $.ajax({
-                        url: 'http://localhost:8083/api/v1/users/update',
-                        headers: {
-                            "Authorization": headers
-                        },
-                        method: 'PUT',
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        data: JSON.stringify(newUser),
-                        error: function(err) {
-                            alert("Đổi mật khẩu không thành công!");
-                            console.log(err);
-                        },
-                        success: function(data) {
-                            alert("Đổi mật khẩu thành công! Vui lòng đăng nhập lại!");
-                            window.location = "./DangNhap.html";
-                        },
-                        fail: function(response) {}
-                    });
-
-                },
-                fail: function(response) {}
-            });
-        }
-    </script>
 
 </body>
 

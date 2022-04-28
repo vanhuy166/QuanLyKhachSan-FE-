@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="./fonts/flaticon/font/flaticon.css">
     <link rel="stylesheet" href="./css/aos.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/login.css">
+
 
 </head>
 
@@ -63,6 +65,82 @@
             </div>
         </div>
 
+        <!-- đăng nhập -->
+        <div class="modal" id="modalDangNhap">
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="signup-wrapper shadow-box">
+                        <div class="company-details ">
+                            <div class="shadow"></div>
+                            <div class="wrapper-1">
+                                <div class="logo">
+                                    <div class="icon-food">
+                                    </div>
+                                </div>
+                                <h1 class="title">ROOM co.</h1>
+                                <div class="slogan">We are number 2, no one is number 1.</div>
+                            </div>
+                        </div>
+                        <div class="signup-form">
+                            <!-- đăng nhập -->
+                            <div id="formDangNhap" class="wrapper-2" style="position: relative; display: block;">
+                                <p onclick="hideDangNhap();" style="cursor: pointer; position:absolute; top:0px; right:8px; font-weight:600; display:block; font-size:1.4rem;">X</p>
+                                <div class="form-title">Đăng nhập!</div>
+                                <div class="form">
+                                    <form>
+                                        <p class="content-item">
+                                            <label>Tài khoản</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="username" type="text" name="email">
+                                        </p>
+
+                                        <p class="content-item">
+
+                                            <label>Mật khẩu</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="password" type="password" name="psw">
+                                        </p>
+                                    </form>
+                                    <button onClick="DangNhap()" id="login" class="signup">Đăng nhập</button>
+                                    <a onClick="showFormDangKy()" class="login">Đăng ký</a>
+                                    <div class="google-btn" onClick="LoginWithGoogle();">
+                                        <div class="google-icon-wrapper">
+                                            <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+                                        </div>
+                                        <p class="btn-text"><b>Sign in with google</b></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="formDangKy" class="wrapper-2" style="position: relative; display: none;">
+                                <p onclick="hideDangNhap();" style="cursor: pointer; position:absolute; top:0px; right:8px; font-weight:600; display:block; font-size:1.4rem;">X</p>
+                                <div class="form-title">Đăng ký!</div>
+                                <div class="form">
+                                    <form>
+                                        <p class="content-item">
+                                            <label>Tài khoản</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="usernameDK" type="text" required>
+                                        </p>
+
+                                        <p class="content-item">
+                                            <label>Email</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="emailDK" type="text" name="email" required>
+                                        </p>
+
+                                        <p class="content-item">
+
+                                            <label>Mật khẩu</label>
+                                            <input style="border-bottom:1px solid rgba(0,0,0,0.5);" id="passwordDK" type="password" name="psw" required>
+                                        </p>
+                                    </form>
+                                    <button onclick="DangKy();" id="signup" class="signup">Đăng ký</button>
+                                    <a onClick="showFormDangNhap();" class="login">Đăng nhập</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- .site-mobile-menu -->
         <div class="site-mobile-menu">
             <div class="site-mobile-menu-header">
@@ -72,7 +150,6 @@
             </div>
             <div class="site-mobile-menu-body"></div>
         </div>
-
 
         <!-- menu -->
         <div class="site-navbar-wrap js-site-navbar bg-white">
@@ -101,22 +178,19 @@
                                                     <li><a href="./DanhSachPhong.html">Phòng đơn</a></li>
                                                     <li><a href="./DanhSachPhong.html">Phòng đôi</a></li>
                                                     <li><a href="./DanhSachPhong.html">Phòng gia đình</a></li>
-
-
                                                 </ul>
                                             </li>
-                                            <li><a href="./DichVu.html">Dịch vụ</a></li>
+                                            <li class="active"><a href="./DichVu.html">Dịch vụ</a></li>
                                             <li><a href="./ThongTin.html">Thông tin</a></li>
-                                            <li class="active"><a href="./LienHe.html">Liên hệ</a></li>
-
-
-                                            <li class="has-children">
+                                            <li><a href="./LienHe.html">Liên hệ</a></li>
+                                            <li class="MenuLogin" id="MenuLogin"><a onclick="showFormDangNhap();">Đăng nhập</a>|<a onclick="showFormDangKy();">Đăng ký</a></li>
+                                            <li class="has-children MenuUser" id="MenuUser" style="display:none;">
                                                 <img src="./images/person_1.jpg" width="50dp" height="	50dp" alt="" style="border-radius: 100px; ;">
                                                 <ul class="dropdown arrow-top">
                                                     <li><a href="#">user</a></li>
                                                     <li><a href="./DanhSachPhongDat.html">Lịch sử </a></li>
                                                     <li><a onclick="showDoiMK();">Đổi mật khẩu</a></li>
-                                                    <li><a href="./DangNhap.html">Đăng xuất</a></li>
+                                                    <li><a onclick="DangXuat();">Đăng xuất</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -135,55 +209,18 @@
             <div class="container">
                 <div class="row align-items-center justify-content-center">
                     <div class="col-md-7 text-center" data-aos="fade">
-                        <span class="caption mb-3">Chat With Us</span>
-                        <h1 class="mb-4">Get In Touch</h1>
+                        <span class="caption mb-3">Luxurious Rooms</span>
+                        <h1 class="mb-4">Hotel Rooms</h1>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="site-section">
+            <div class="container" id="ctDichvu">
 
-        <div class="site-section site-section-sm">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-md-12 col-lg-8 mb-5">
-                        <form action="#" class="p-5 bg-white">
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <label class="font-weight-bold" for="message">Message</label>
-                                    <textarea name="message" id="message" cols="30" rows="5" class="form-control" placeholder="Say hello to us"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <button style="float:right;" class="btn btn-primary pill px-4 py-2" onclick="ThemPhanHoi();">Send Message</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="p-4 mb-3 bg-white">
-                            <h3 class="h5 text-black mb-3">Contact Info</h3>
-                            <p class="mb-0 font-weight-bold">Address</p>
-                            <p class="mb-4">203 Fake St. Mountain View, San Francisco, California, USA</p>
-
-                            <p class="mb-0 font-weight-bold">Phone</p>
-                            <p class="mb-4"><a href="#">+1 232 3235 324</a></p>
-
-                            <p class="mb-0 font-weight-bold">Email Address</p>
-                            <p class="mb-0"><a href="#">youremail@domain.com</a></p>
-
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
-
-
 
 
         <footer class="site-footer">
@@ -236,6 +273,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </footer>
     </div>
@@ -253,127 +291,112 @@
     <script src="js/aos.js"></script>
     <script src="js/mediaelement-and-player.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
 
-    <!-- thêm phản hồi -->
+    <!-- video demo -->
     <script>
-        function ThemPhanHoi() {
-            if ($('#message').val().trim() != "") {
-                var headers = "Bearer " + localStorage.getItem("token");
-                var username = parseJwt(localStorage.getItem("token"));
+        document.addEventListener('DOMContentLoaded', function() {
+            var mediaElements = document.querySelectorAll('video, audio'),
+                total = mediaElements.length;
 
-                var data = {
-                    "content": $('#message').val().trim(),
-                    "username": username.sub
-                }
-
-                $.ajax({
-                    url: 'http://localhost:8083/api/v1/reviews',
-                    headers: {
-                        "Authorization": headers
-                    },
-                    method: 'POST',
-                    contentType: 'application/json',
-                    dataType: "json",
-                    data: JSON.stringify(data),
-                    error: function(err) {
-                        console.log(err);
-                    },
-                    success: function(data) {
-                        alert("Thêm thành công!");
-                        $('#message').val("");
-                    },
-                    fail: function(response) {}
+            for (var i = 0; i < total; i++) {
+                new MediaElementPlayer(mediaElements[i], {
+                    pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
+                    shimScriptAccess: 'always',
+                    success: function() {
+                        var target = document.body.querySelectorAll('.player'),
+                            targetTotal = target.length;
+                        for (var j = 0; j < targetTotal; j++) {
+                            target[j].style.visibility = 'visible';
+                        }
+                    }
                 });
-
-            } else {
-                alert("Hãy thêm nội dung đóng góp!!");
             }
-        }
-
-        function parseJwt(token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-
-            return JSON.parse(jsonPayload);
-        }
+        });
     </script>
 
-    <!-- Đổi mật khẩu -->
+
+    <!-- load chi tiết dịch vụ -->
     <script>
-        function showDoiMK() {
-            $("#modal").css("display", "block");
-        }
+        var idDichvu = sessionStorage.getItem('key1');
+        $.ajax({
+            url: 'http://localhost:8083/api/v1/hotel-services/' + idDichvu,
+            method: 'GET',
+            contentType: 'json',
+            dataType: 'json',
+            error: function(err) {
+                console.log(err);
+            },
+            success: function(res) {
+                $("#ctDichvu").empty();
+                const len = res.length;
+                let table = '';
 
-        function hideDoiMK() {
-            $("#modal").css("display", "none");
-            $('#txtEmail').val("");
-            $('#txtNewPass').val("");
-            $('#txtRe_NewPass').val("");
-        }
+                table += `
+            <div class="row align-items-center">
+                    <div class="col-md-6 mb-5 mb-md-0">
+    
+                        <div class="img-border">
+                            <a href="https://vimeo.com/28959265" class="popup-vimeo image-play">
+                                <span class="icon-wrap">
+                                    <span class="icon icon-play"></span>
+                                </span>
+                                <img src="./images/` + res.image + `" alt="" class="img-fluid">
+                            </a>
+                        </div>
+                        <img src="./images/` + res.image + `" alt="Image" class="img-fluid image-absolute">
+    
+                    </div>
+                    <div class="col-md-5 ml-auto">
+                        <div class="section-heading text-left">
+                            <h2 class="mb-5">Thông tin</h2>
+                        </div>
+                        <table style="width:100%;">
+                            <tr>
+                                <th>Dịch vụ:</th>
+                                <td>` + res.name + `</td>
+                            </tr>
+                            <tr>
+                                <th>Loại phòng:</th>
+                                <td>` + res.type + `</td>
+                            </tr>
+                           
+                            <tr>
+                                <th>Giá phòng:</th>
+                                <td>` + res.price + ` VNĐ</td>
+                            </tr>
+    
+                            <tr>
+                                <th>Số Lượng</th>
+                                <td> <input type="number" id="sl" name="fromDate" value = "1" min="1"></td>
+                            </tr>
+                            
+                        </table>
+    
+                        <br>
+                        <p class="mb-4">Khách sạn Hoàng Hôn luôn mang vẻ đẹp hiện đại xen lẫn nét cổ kính. Đặt khách sạn sớm nhất để hưởng trọn ưu đãi, hứa hẹn một kì nghỉ với những ...</p>
+                        <p>
+                            <a href="https://vimeo.com/28959265" class="btn btn-primary pill px-4  popup-vimeo text-uppercase btn btn-XemVideo">Xem Video <span class="icon-arrow-right small"></span></a>
+                            <button  class="btn btn-primary pill text-white px-4 btn-DatPhong" id="btn-DatPhong" onclick="addbtn();">Thêm</button>
+                        </p>
+    
+                    </div>
+                </div>
+                `;
 
-        function DoiMatKhau() {
-            var headers = "Bearer " + localStorage.getItem("token");
-            $.ajax({
-                url: 'http://localhost:8083/api/v1/users/info',
-                headers: {
-                    "Authorization": headers
-                },
-                method: 'GET',
-                contentType: 'application/json',
-                error: function(err) {
-                    console.log(err);
-                },
-                success: function(data) {
-                    if (data.email != $('#txtEmail').val()) {
-                        alert("Email không chính xác!");
-                        return;
-                    }
+                document.getElementById('ctDichvu').innerHTML = table;
+            },
+            fail: function(response) {}
 
-                    if ($('#txtNewPass').val().trim() == "") {
-                        alert("Mật khẩu không được để trống!");
-                        return;
-                    }
-
-                    if ($('#txtNewPass').val() != $('#txtRe_NewPass').val()) {
-                        alert("Mật khẩu không khớp!");
-                        return;
-                    }
-
-                    var newUser = {
-                        "id": data.id,
-                        "password": $('#txtNewPass').val()
-                    }
-
-                    idUser = data.id;
-                    $.ajax({
-                        url: 'http://localhost:8083/api/v1/users/update',
-                        headers: {
-                            "Authorization": headers
-                        },
-                        method: 'PUT',
-                        contentType: 'application/json',
-                        dataType: 'json',
-                        data: JSON.stringify(newUser),
-                        error: function(err) {
-                            alert("Đổi mật khẩu không thành công!");
-                            console.log(err);
-                        },
-                        success: function(data) {
-                            alert("Đổi mật khẩu thành công! Vui lòng đăng nhập lại!");
-                            window.location = "./DangNhap.html";
-                        },
-                        fail: function(response) {}
-                    });
-
-                },
-                fail: function(response) {}
-            });
-        }
+        });
     </script>
 
+    <!-- sd dịch vụ -->
+    <script>
+        function addbtn() {
+
+        }
+    </script>
 </body>
 
 </html>

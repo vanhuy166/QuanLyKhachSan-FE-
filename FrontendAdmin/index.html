@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CauGiay Hotel</title>
+    <link rel="stylesheet" href="style/styleLogin.css">
+    <style>
+        #btnDangNhap {
+            width: 80%;
+            height: 50px;
+            border: 1px solid;
+            background: #2691d9;
+            margin: 0 10%;
+            border-radius: 25px;
+            font-size: 18px;
+            color: #e9f4fb;
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <h1>Đăng nhập</h1>
+        <form name="login">
+            <div class="txt_field">
+                <input id="username" name="name" type="text">
+                <span></span>
+                <label>Tài khoản</label>
+            </div>
+            <div class="txt_field">
+                <input id="password" name="password" type="password" autocomplete="on">
+                <span></span>
+                <label>Mật khẩu</label>
+            </div>
+            <div class="pass">Quên mật khẩu?</div>
+        </form>
+        <button id="btnDangNhap" onclick="DangNhap();">Đăng nhập</button>
+        <div class="signup_link">
+            <a href="#">Đăng ký</a>
+        </div>
+    </div>
+
+    <script src="plugins/jquery/jquery-3.4.1.min.js"></script>
+    <script>
+        function DangNhap() {
+
+            var data = {
+                "username": $("#username").val(),
+                "password": $("#password").val(),
+            };
+            $.ajax({
+                url: 'http://localhost:8083/api/v1/users/login',
+                type: 'POST',
+                data: JSON.stringify(data),
+                error: function(err) {
+                    console.log('Error!', err);
+                    alert("Đăng nhập thất bại!");
+                },
+                success: function(data) {
+                    var token = data.token;
+
+                    var role = parseJwt(token);
+                    if (role.authorities[0].authority == "ROLE_ADMIN") {
+                        localStorage.setItem("token", token);
+                        window.location = "./DanhSachPhong.html";
+                    } else {
+                        alert("Đăng nhập thất bại!");
+                    }
+                }
+            });
+
+        }
+
+        function parseJwt(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        };
+    </script>
+</body>
+
+</html>

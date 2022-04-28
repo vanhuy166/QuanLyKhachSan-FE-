@@ -2165,3 +2165,93 @@ a:hover {
     min-height: 300px;
     color: #333;
 }
+
+
+/* buttonmap */
+
+.buttonMap {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 18%;
+    padding: 8px;
+    border-radius: 3px;
+    margin: 0 20px 10px 0;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    background: #ee8a65;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+
+/* sign in with google */
+
+.google-btn {
+    width: 232px;
+    height: 42px;
+    background-color: #4285f4;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .25);
+    margin-top: 20px;
+}
+
+.google-btn:hover {
+    box-shadow: 0 0 6px #4285f4;
+}
+
+.google-btn:active {
+    background: #1669F2;
+}
+
+.google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.google-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+}
+
+.btn-text {
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+    text-align: center;
+    padding: 12px 0 0 32px;
+}
+
+
+/*  */
+
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+    z-index: 5000;
+}
+
+#MenuLogin>a {
+    font-weight: 700;
+}
+
+#MenuLogin>a:hover {
+    color: #f23a2e;
+    cursor: pointer;
+}

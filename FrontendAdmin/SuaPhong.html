@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../DangNhap.html"> Đăng xuất <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <a class="nav-link" href="index.html"> Đăng xuất <i class="nav-icon fas fa-sign-out-alt"></i>
         </a>
                 </li>
             </ul>
@@ -163,7 +163,7 @@
                 let table = '';
                 table += `
                 <div class="col-sm-6" style="text-align:center;">
-                    <img id="imgRoom" style="width:300px; height:300px;" src="../images/` + data.image + `" alt="">
+                    <img id="imgRoom" style="width:300px; height:300px;" src="./images/` + data.image + `" alt="">
                 </div>
                 <div class="col-sm-6 MainSP">
                     <h4>Sửa thông tin phòng</h4>
@@ -219,7 +219,7 @@
                 document.getElementById('file-upload').onchange = function() {
                     var imageDemo = document.getElementById("imgRoom");
                     var arr = this.value.split("\\");
-                    imageDemo.src = "../images/" + arr[arr.length - 1];
+                    imageDemo.src = "./images/" + arr[arr.length - 1];
                     img = arr[arr.length - 1];
                 };
             },

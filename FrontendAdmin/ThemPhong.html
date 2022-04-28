@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../DangNhap.html"> Đăng xuất <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <a class="nav-link" href="index.html"> Đăng xuất <i class="nav-icon fas fa-sign-out-alt"></i>
         </a>
                 </li>
             </ul>
@@ -134,7 +134,7 @@
                 <div class="container-fluid">
                     <div class="row contentHeader" id="chiTietPhong">
                         <div class="col-sm-6" style="text-align:center;">
-                            <img id="imgRoom" style="width:300px; height:300px;" src="../images/img_1.jpg" alt="">
+                            <img id="imgRoom" style="width:300px; height:300px;" src="./images/img_1.jpg" alt="">
                         </div>
                         <div class="col-sm-6 MainSP">
                             <h4>Thêm phòng</h4>
@@ -191,7 +191,7 @@
         document.getElementById('file-upload').onchange = function() {
             var imageDemo = document.getElementById("imgRoom");
             var arr = this.value.split("\\");
-            imageDemo.src = "../images/" + arr[arr.length - 1];
+            imageDemo.src = "./images/" + arr[arr.length - 1];
             img = arr[arr.length - 1];
         };
 
