@@ -385,8 +385,10 @@
     <script>
         var headers = "Bearer " + sessionStorage.getItem("token");
         var roomCharge = 0;
-        var originalRoomId, receiptId, userID;
+        var originalRoomId, receiptId = [],
+            userID, bookingId = [];
 
+        var listBook = [];
         $.ajax({
             url: 'http://localhost:8083/api/v1/users/info',
             headers: {
@@ -418,21 +420,30 @@
             success: function(data) {
                 const len = data.length;
                 let table = '';
+                var listBookRoom, lenBook;
                 for (var i = 0; i < len; ++i) {
                     if (data[i].paymentState == "UNPAID") {
-                        var listBookRoom = data[i].bookingDetails;
-                        var lenBook = listBookRoom.length;
-                        var receiptId = data[i].receiptId;
+                        listBookRoom = data[i].bookingDetails;
+                        lenBook = listBookRoom.length;
+                        receiptId.push(data[i].receiptId);
+                        bookingId.push(data[i].bookingId);
+
+                        listBook.push({
+                            bookingId: lenBook
+                        })
+
+                        //console.log(listBook)
+
+                        // console.log("aaaaaaaaaaa: " + bookingId)
 
                         for (var j = 0; j < lenBook; ++j) {
+                            // console.log("bbbbbbbbbb:" + lenBook)
                             const startDate = listBookRoom[j].startDate;
                             const endDate = listBookRoom[j].endDate;
 
                             const t1 = new Date(startDate);
                             const t2 = new Date(endDate);
                             const datediff = parseInt(Math.abs(t2.getTime() - t1.getTime()) / (24 * 60 * 60 * 1000) + 1);
-
-
 
                             $.ajax({
                                 url: 'http://localhost:8083/api/v1/rooms/' + listBookRoom[j].roomId,
@@ -442,40 +453,54 @@
                                 error: function(err) {
                                     console.log(err);
                                 },
-                                success: function(data) {
-                                    roomCharge += datediff * parseFloat(data.roomType.price);
-                                    table += `
-                                <tr>
-                                    <th scope="row">
-                                        <img src="./images/` + data.image + `" width="50dp" height="40dp" alt=""> ` + data.name + `
-                                    </th>
-                                    <td> ` + data.roomType.name + `</td>
-                                    <td> ` + data.roomType.price + ` VNĐ</td>
-                                    <td>` + startDate + `</td>
-                                    <td>` + endDate + `</td>
-                                    <td>` + datediff + `</td>
-                                    <td>` + (datediff * parseFloat(data.roomType.price)).toString() + ` VNĐ</td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-danger" onclick="huybtn('')">Hủy</button>
-                                        <button type="button" class="btn btn-outline-danger" onclick="doibtn('` + data.roomId + `','` + receiptId + `')">Đổi</button>
-                                    </td>
-                                </tr>
-                                   `;
-                                    document.getElementById('allHistory').innerHTML = table;
-                                    document.getElementById('tinhTien').innerHTML = `<tr>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col">` + roomCharge + ` VNĐ</th>
-                                    <td scope="col"> <button type="button" class="btn btn-outline-danger" onclick="ThanhToan()">Đặt</button></td>
-                                </tr>`;
+                                success: function(data1) {
+                                    if (listBook.length > 0) {
+                                        if (listBook[0].bookingId == 0) {
+                                            listBook.shift();
+                                            bookingId.shift();
+                                            receiptId.shift();
+                                        }
+                                        //console.log("cccc:" + bookingId[0] + "   -------   " + listBook[0].bookingId + " length: " + listBook.length)
+                                        listBook[0].bookingId--;
+                                        roomCharge += datediff * parseFloat(data1.roomType.price);
+                                        table += `
+                                            <tr>
+                                                <th scope="row">
+                                                    <img src="./images/` + data1.image + `" width="50dp" height="40dp" alt=""> ` + data1.name + `
+                                                </th>
+                                                <td> ` + data1.roomType.name + `</td>
+                                                <td> ` + data1.roomType.price + ` VNĐ</td>
+                                                <td>` + startDate + `</td>
+                                                <td>` + endDate + `</td>
+                                                <td>` + datediff + `</td>
+                                                <td>` + (datediff * parseFloat(data1.roomType.price)).toString() + ` VNĐ</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-outline-danger" onclick="huybtn(` + bookingId[0] + `)">Hủy</button>
+                                                    <button type="button" class="btn btn-outline-danger" onclick="doibtn('` + data1.roomId + `','` + receiptId[0] + `')">Đổi</button>
+                                                </td>
+                                            </tr>
+                                       `;
+                                        document.getElementById('allHistory').innerHTML = table;
+                                        document.getElementById('tinhTien').innerHTML = `<tr>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col">` + roomCharge + ` VNĐ</th>
+                                        <td scope="col"> <button type="button" class="btn btn-outline-danger" onclick="ThanhToan()">Đặt</button></td>
+                                    </tr>`;
+                                    }
+
                                 },
                                 fail: function(response) {}
                             });
                         }
+
+
+
+
                     }
                 }
             },
@@ -494,7 +519,7 @@
                 url: 'http://localhost:8083/api/v1/rooms',
                 method: 'GET',
                 contentType: 'json',
-                dataType: 'json',
+                data1Type: 'json',
                 error: function(err) {
                     console.log(err);
                 },
@@ -587,8 +612,34 @@
             $("#changeRoom").css("display", "none");
         }
 
-        function huybtn() {
-            alert("hủy")
+        function huybtn(bookingID) {
+            //alert(bookingID)
+            if (confirm("Bạn có muốn hủy phòng này không!")) {
+                var headers = "Bearer " + sessionStorage.getItem("token");
+                var data = {
+                    userId: userID,
+                    bookingId: bookingID
+                }
+                console.log(data)
+                $.ajax({
+                    url: 'http://localhost:8083/api/v1/bookings',
+                    headers: {
+                        "Authorization": headers
+                    },
+                    method: 'DELETE',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify(data),
+                    error: function(err) {
+                        console.log(err);
+                    },
+                    success: function(data) {
+                        alert("Hủy thành công");
+                        window.location = "./DanhSachPhongDat.html";
+                    },
+                    fail: function(response) {}
+                });
+            }
         }
 
         function ThanhToan() {
