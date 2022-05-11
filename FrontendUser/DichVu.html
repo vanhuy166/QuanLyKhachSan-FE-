@@ -454,7 +454,9 @@
         /* lọc theo loại dịch vụ */
         function handleClick(myRadio) {
             var data = {
-                "type": myRadio.value
+                "type": myRadio.value,
+                "priceFrom": 0,
+                "priceTo": 1000000000
             }
             filter(data);
         }

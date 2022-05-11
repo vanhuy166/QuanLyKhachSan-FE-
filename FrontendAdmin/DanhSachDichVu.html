@@ -294,7 +294,9 @@
             }
 
             var data = {
-                "type": $("#selLoaiDV :selected").val()
+                "type": $("#selLoaiDV :selected").val(),
+                "priceFrom": 0,
+                "priceTo": 1000000000
             }
             filter(data);
         }
